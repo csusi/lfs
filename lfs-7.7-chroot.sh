@@ -21,7 +21,7 @@ check_user root
 
 
 ########## Begin LFS Chapter Content ##########
-
+echo ""
 echo "*** Creating /etc/profile "
 cat > /etc/profile << EOF
 # Begin /etc/profile
@@ -36,5 +36,6 @@ EOF
 cat /etc/profile > $LFS_LOG_FILE-profile.log
 
 ### Not showing logs or capturing file list.  I'm adding one file.  
+echo ""
 echo "*** --> ./lfs-7.8-chroot.sh"
 echo ""

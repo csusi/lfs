@@ -21,7 +21,8 @@ check_user root
 
 ########## Begin LFS Chapter Content ##########
 
-echo "*** Creating /etc/shells "
+echo ""
+echo "*** Creating /etc/shells file"
 
 cat > /etc/shells << "EOF"
 # Begin /etc/shells
@@ -39,6 +40,6 @@ cat /etc/shells > $LFS_LOG_FILE-shells.log
 echo "Chapter 7 Completed on $(date -u)" >> /build-logs/0-milestones.log
 
 ### Not showing logs or capturing file list.  I'm adding one file.  
-
+echo ""
 echo "*** --> ./lfs-8.2-chroot.sh"
 echo ""

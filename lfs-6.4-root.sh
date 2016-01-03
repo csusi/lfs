@@ -17,11 +17,10 @@ echo
 echo "*** In order to continue using these scripts, they will be copied "
 echo "*** to the $LFS_MOUNT_DIR/tools directory. After running this script,"
 echo "*** run the following two commands:"
-echo "*** ---> cd /root/lfs"
-echo "*** ---> ./lfs-6.5-root.sh"
+echo "*** ---> cd /tools/lfs ; ./lfs-6.5-chroot.sh"
 echo
 
-cp -r /root/lfs $LFS_MOUNT_DIR/root/lfs
+cp -r /root/lfs $LFS_MOUNT_DIR/tools/lfs
 
 chroot "$LFS_MOUNT_DIR" /tools/bin/env -i \
   HOME=/root \

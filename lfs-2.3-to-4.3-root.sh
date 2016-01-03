@@ -28,6 +28,6 @@ echo "########################## End Chapter 2.3 to 4.3 ########################
 echo "*** STOP! Verify all files downloaded and MD5 sums check from Ch. 3.1"
 echo "*** Then run:"
 echo "*** --> su - lfs "
-echo "*** --> ./lfs-4.4-lfs.sh"
+echo "*** --> cd lfs ; ./lfs-4.4-lfs.sh"
 echo ""
 

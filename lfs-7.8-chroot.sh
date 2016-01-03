@@ -21,7 +21,8 @@ check_user root
 
 ########## Begin LFS Chapter Content ##########
 
-echo "*** Creating /etc/inputrc "
+echo ""
+echo "*** Creating /etc/inputrc file"
 
 cat > /etc/inputrc << "EOF"
 # Begin /etc/inputrc
@@ -72,6 +73,6 @@ EOF
 cat /etc/inputrc > $LFS_LOG_FILE-inputrc.log
 
 ### Not showing logs or capturing file list.  I'm adding one file.  
-
+echo ""
 echo "*** --> ./lfs-7.9-chroot.sh"
 echo ""

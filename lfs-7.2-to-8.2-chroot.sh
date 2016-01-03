@@ -29,7 +29,7 @@ check_user root
 
 echo ""
 echo "########################## End Chapter 7.2 to 8.2 ##########################"
-echo "*** STOP! Verify all files downloaded and MD5 sums check from Ch. 3.1"
+echo "*** It's time to start building the Linux Kernel. Run:"
 echo "*** --> ./lfs-8.3.1-chroot.sh"
 echo ""
 

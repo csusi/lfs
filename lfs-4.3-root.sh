@@ -29,10 +29,12 @@ chown -v lfs $LFS_MOUNT_DIR/build-logs
 chown -v lfs $LFS_MOUNT_DIR/build-logs/0-milestones.log
 
 echo "*** Copy the lfs scripts to lfs user home dir"
-cp lfs-4*.* /home/lfs/lfs 
+mkdir /home/lfs/lfs
+cp lfs-4*.* /home/lfs/lfs
 cp lfs-5*.* /home/lfs/lfs
 cp lfs-include.sh  /home/lfs/lfs
-chmod 777 /home/lfs/lfs/lfs-*
+chown -R lfs:lfs /home/lfs/lfs
+chmod 760 /home/lfs/lfs/lfs-*
 
 ### We are now ready to 'su - lfs', which I am commenting it out of the script.
 ### Having user perform this task, and then run the next script.
@@ -42,6 +44,5 @@ echo ""
 echo "########################### End Chapter 4.3 ###########################"
 echo "You are now ready to change to the 'lfs' user and continue:"
 echo "--> su - lfs"
-echo "--> cd lfs"
-echo "--> ./lfs-4.4-lfs.sh"
+echo "--> cd lfs ; ./lfs-4.4-lfs.sh"
 echo ""

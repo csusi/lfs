@@ -78,7 +78,7 @@ cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
 rm -rf $LFS_BUILD_DIRECTORY
 
-echo "Errors here are probably red herrings, just the word 'error' in the logs.
+echo "Errors here are probably red herrings, just the word 'error' in the logs."
 show_build_errors ""
 capture_file_list "" 
 chapter_footer

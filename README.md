@@ -33,37 +33,27 @@ Instructions:
   --> cd /root/lfs 
 
 0. Build the LFS system starting below. Each script covers a section of the book, and are named in the following pattern:
-   XXX-C.S-YYYY.sh    
-     XXX - LFS book (LFS, BLFS)  
-      C - Chapter Number  
-      S - Section Number  
-      YYYY - User account the script should be run as.  
-         root - Run as host OS root user at /root/lfs   
-         lfs - Run as lfs user on hos os at /home/lfs/lfs  
-         chroot - Run when chrooted into LFS mount point as root at /home/lfs/lfs (on LFS partition)  
+
+        XXX-C.S-YYYY.sh    
+          XXX - LFS book
+          C - Chapter Number  
+          S - Section Number  
+          YYYY - User account the script should be run as.  
+            root - Run as host OS root user at /root/lfs   
+            lfs - Run as lfs user on hos os at /home/lfs/lfs  
+            chroot - Run when chrooted into LFS mount point as root at /home/lfs/lfs (on LFS partition)  
+         
   --> ./lfs-0-root.sh
         
-        Batch scripts are included to run build multiple chapters sequentially.
-        Use when familiar with, and comfortable chapters will compile correctly.
+Batch scripts are included to run build multiple chapters sequentially.  Use when familiar with, and comfortable chapters will compile correctly.
         
-        The scripts lfs-8.3.1-root.sh & lfs-8.3.2-root.sh - The Kernel build is broken
-        in two parts.  The reason for this is that the first half extracts the 
-        source files and runs 'make mrproper'.  The break is to create the
-        .config file containing kernel compilation options, which is a 
-        necessary step prior to compiling the kernel.  The second script
-        then performs the compile.
+The scripts lfs-8.3.1-root.sh & lfs-8.3.2-root.sh - The Kernel build is broken in two parts.  The reason for this is that the first half extracts the source files and runs 'make mrproper'.  The break is to create the .config file containing kernel compilation options, which is a necessary step prior to compiling the kernel.  The second script then performs the compile.
         
-        Scripts will write output to /mnt/lfs/build-logs for reference.
+Scripts will write output to /mnt/lfs/build-logs for reference.
 	
-        Pay attention.  Stop and validate output when requested.  Check 
-        the logs (in /mnt/lfs/build-logs) for errors.  Check notes in book
-        and script if they are critical. And, may god have mercy on your soul.
+Pay attention.  Stop and validate output when requested.  Check the logs (in /mnt/lfs/build-logs) for errors.  Check notes in book and script if they are critical. And, may god have mercy on your soul.
         
-        The last script from the book is 'lfs-9.3-unmount-and-reboot.sh'.  The
-        scripts labeled as 9.4.# will build BLFS packages to get the
-        process started.  Once your LFS boots, read below to run this and begin
-        the process by compiling some additional critical components while
-        in the host system.
+The last script from the book is 'lfs-9.3-unmount-and-reboot.sh'.  The scripts labeled as 9.4.# will build BLFS packages to get the process started.  Once your LFS boots, read below to run this and begin the process by compiling some additional critical components while in the host system.
              
 
 Tested Host OS  

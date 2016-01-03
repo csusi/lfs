@@ -28,19 +28,20 @@ Instructions:
     $PAGE - Sets default page size for printing based on country standard  
     Local Networking Settings for Ch. 7.5   
         
-    4) Need to be root to start:    
-        --> sudo -i
-        --> cd /root/lfs
+0. Need to be root to start:    
+  --> sudo -i  
+  --> cd /root/lfs 
 
-    5) Build the LFS system starting below. Each script covers a section of 
-       the book, and are named in the following pattern:
-          XXX-C.S-YYYY.sh  
-            XXX - LFS book (LFS, BLFS)
-            C - Chapter Number
-            S - Section Number
-            YYYY - User account the script should be run as.
-        
-        --> ./lfs-0-root.sh
+0. Build the LFS system starting below. Each script covers a section of the book, and are named in the following pattern:
+   XXX-C.S-YYYY.sh    
+     XXX - LFS book (LFS, BLFS)  
+      C - Chapter Number  
+      S - Section Number  
+      YYYY - User account the script should be run as.  
+         root - Run as host OS root user at /root/lfs   
+         lfs - Run as lfs user on hos os at /home/lfs/lfs  
+         chroot - Run when chrooted into LFS mount point as root at /home/lfs/lfs (on LFS partition)  
+  --> ./lfs-0-root.sh
         
         Batch scripts are included to run build multiple chapters sequentially.
         Use when familiar with, and comfortable chapters will compile correctly.

@@ -1,0 +1,113 @@
+# Req=Required, Rec=Recommended, Opt=Optional
+
+# 9.4.2 openssl - Req for Cert Auth; Rec cURL; Opt Nettle
+# http://linuxfromscratch.org/blfs/view/stable/postlfs/openssl.html
+MD5=openssl-1.0.2e.tar.gz=5262bfa25b60ed9de9f28d5d52d77fc5
+https://www.openssl.org/source/openssl-1.0.2e.tar.gz
+
+# 9.4.3 CertAuth - Rec for GnuTLS/cURL
+# http://linuxfromscratch.org/blfs/view/stable/postlfs/cacerts.html
+http://anduin.linuxfromscratch.org/sources/other/certdata.txt
+
+# 9.4.4 Nettle - Req for GnuTLS->wget
+# http://linuxfromscratch.org/blfs/view/stable/postlfs/nettle.html
+MD5=nettle-3.1.1.tar.gz=b40fa88dc32f37a182b6b42092ebb144  
+https://ftp.gnu.org/gnu/nettle/nettle-3.1.1.tar.gz
+
+# 9.4.5 libtasn1 - Rec for p11-kit->wget
+# http://linuxfromscratch.org/blfs/view/stable/general/libtasn1.html
+MD5=libtasn1-4.6.tar.gz=454a7f80362f38bd2335b6e9d95f57a6  
+http://ftp.gnu.org/gnu/libtasn1/libtasn1-4.6.tar.gz
+
+# 9.4.6 libffi - Rec for p11-kit->GnuTLS->wget
+# http://linuxfromscratch.org/blfs/view/stable/general/libffi.html
+MD5=libffi-3.2.1.tar.gz=83b89587607e3eb65c70d361f13bab43  
+ftp://sourceware.org/pub/libffi/libffi-3.2.1.tar.gz
+
+# 9.4.7 p11-kit - Rec for GnuTLS->wget
+# http://linuxfromscratch.org/blfs/view/stable/postlfs/p11-kit.html
+MD5=p11-kit-0.23.1.tar.gz=96f073270c489c9a594e1c9413f42db8  
+http://p11-glue.freedesktop.org/releases/p11-kit-0.23.1.tar.gz
+
+# 9.4.8 GnuTLS - Rec for wget, cURL->git
+# http://linuxfromscratch.org/blfs/view/stable/postlfs/gnutls.html
+MD5=gnutls-3.4.4.1.tar.xz=474efaba6fd6c6c6c0ebac2a3f431946  
+ftp://ftp.gnutls.org/gcrypt/gnutls/v3.4/gnutls-3.4.4.1.tar.xz
+
+# 9.4.9 wget - For retrieving source packages in our LFS instance
+# http://linuxfromscratch.org/blfs/view/stable/basicnet/wget.html
+MD5=wget-1.16.3.tar.xz=d2e4455781a70140ae83b54ca594ce21
+http://ftp.gnu.org/gnu/wget/wget-1.16.3.tar.xz
+
+# 9.4.10 cURL - Rec for Git
+# http://linuxfromscratch.org/blfs/view/stable/basicnet/curl.html
+MD5=curl-7.44.0.tar.lzma=2f924c80bb7124dff1b39f54ffda3781
+http://curl.haxx.se/download/curl-7.44.0.tar.lzma
+
+# 9.4.11 UnZip - Req DocBook XML->xmlto->git
+# http://linuxfromscratch.org/blfs/view/stable/general/unzip.html
+MD5=unzip60.tar.gz=62b490407489521db863b523a7f86375
+http://downloads.sourceforge.net/infozip/unzip60.tar.gz
+
+# 9.4.12 SGML Common - Req DocBook XML->xmlto->git
+# http://linuxfromscratch.org/blfs/view/stable/pst/sgml-common.html
+MD5=sgml-common-0.6.3.tgz=103c9828f24820df86e55e7862e28974
+ftp://sources.redhat.com/pub/docbook-tools/new-trials/SOURCES/sgml-common-0.6.3.tgz
+http://www.linuxfromscratch.org/patches/blfs/7.8/sgml-common-0.6.3-manpage-1.patch
+
+# 9.4.13 libxml2 - Req DocBook XML/XSL/libxslt->xmlto->git
+# http://linuxfromscratch.org/blfs/view/stable/general/libxml2.html
+MD5=libxml2-2.9.2.tar.gz=9e6a9aca9d155737868b3dc5fd82f788  
+http://xmlsoft.org/sources/libxml2-2.9.2.tar.gz
+
+# 9.4.14 DocBook XSL Stylesheets - Req xmlto->git
+# http://linuxfromscratch.org/blfs/view/stable/pst/docbook-xsl.html
+MD5=docbook-xsl-1.78.1.tar.bz2=6dd0f89131cc35bf4f2ed105a1c17771
+http://downloads.sourceforge.net/docbook/docbook-xsl-1.78.1.tar.bz2
+
+# 9.4.15 DocBook XML DTD - Req xmlto->git
+# http://linuxfromscratch.org/blfs/view/stable/pst/docbook.html
+MD5=docbook-xml-4.5.zip=03083e288e87a7e829e437358da7ef9e
+http://www.docbook.org/xml/4.5/docbook-xml-4.5.zip
+
+# 9.4.16 libxslt - Req xmlto->git
+# http://linuxfromscratch.org/blfs/view/stable/general/libxslt.html
+MD5=libxslt-1.1.28.tar.gz=9667bf6f9310b957254fdcf6596600b7
+http://xmlsoft.org/sources/libxslt-1.1.28.tar.gz
+
+# 9.4.17 xmlto - Opt to build man pages for git
+# http://linuxfromscratch.org/blfs/view/stable/general/libxml2.html
+MD5=xmlto-0.0.26.tar.bz2=c90a47c774e0963581c1ba57235f64f4  
+https://fedorahosted.org/releases/x/m/xmlto/xmlto-0.0.26.tar.bz2
+
+# 9.4.18 AsciiDoc or AsciiDoctor - Opt build man pages for git 
+# Note: Both of these look like a real pain in the ass to install on
+#   a basic LFS system that we have so far, because they will require
+#   a bunch of additional dependencies
+# AsciiDoc - http://www.methods.co.nz/asciidoc/
+#   Readme: http://www.methods.co.nz/asciidoc/README.html
+#     Current AsciiDoc version tested on Xubuntu Linux 10.04 with:
+#       Python 2.6.5 (Avail in BLFS book) 
+#       DocBook XSL Stylesheets 1.76.1 (done above) 
+#       xsltproc (libxml 20706, libxslt 10126 and libexslt 815) (above in libxslt).
+#       w3m 0.5.2 (Avail in BLFS book) 
+#       dblatex 0.3 (http://dblatex.sourceforge.net/) 
+#       FOP 0.95 (Done in LFS) 
+#       A-A-P 1.091 (http://www.a-a-p.org/) 
+#
+# AsciiDoctor - http://asciidoctor.org/
+#   Source: https://github.com/asciidoctor/asciidoctor
+#   Readme: https://github.com/asciidoctor/asciidoctor/blob/master/README.adoc 
+#   Requirements
+#     MRI (Ruby 1.8.7, 1.9.3, 2.0, 2.1 & 2.2)
+#     JRuby 1.7 (Ruby 1.8 and 1.9 modes) & 9000
+#     Rubinius 2.2.x
+#     Opal (JavaScript)
+# 
+# So guess what? We're not going to build the manpages for Git right now
+
+
+# 9.4.19 git - For downloading BLFS scripts in our LFS instance
+# http://linuxfromscratch.org/blfs/view/stable/general/git.html
+MD5=git-2.5.0.tar.xz=f108b475a0aa30e9587be4295ab0bb09  
+https://www.kernel.org/pub/software/scm/git/git-2.5.0.tar.xz

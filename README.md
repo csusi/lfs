@@ -44,18 +44,40 @@ Instructions:
             chroot - Run when chrooted into LFS mount point as root at /home/lfs/lfs (on LFS partition)  
          
   --> ./lfs-0-root.sh
-        
+ 
+The scripts lfs-8.3.1-root.sh & lfs-8.3.2-root.sh - The Kernel build is broken in two parts.  The reason for this is that the first half extracts the source files and runs 'make mrproper'.  The break is to create the .config file containing kernel compilation options, which is a necessary step prior to compiling the kernel.  The second script then performs the compile.
+
+Other
+-----
+
+Pay attention for chapters that require to stop and validate output when requested.  Check the logs (in /mnt/lfs/build-logs) for errors.  There are some harmless errors that occur, so check notes in book and script if they are critical. And, may god have mercy on your soul.
+
+Scripts will write substantial output to /mnt/lfs/build-logs.  Start here when troubleshooting.
+
+While working in the bulk of chapter 5, the scripts are located at '/home/lfs/lfs' where  they are actually run by the 'lfs' user.  Similarly, in much of chapter 6, the chrooted 'root' user will be running the scripts from '$LFS_MOUNT_DIR/root/lfs'. Therefore, if any changes are made to the scripts located at '/root/lfs', they will need to be copied to the appropriate location for the 'lfs' or chrooted 'root' user in Ch 5 and 6.
+
+If a script determines that a source code directory already exists from extracted source tar, it will not re-extract the contents.  Likewise, at the end of the compilation the scripts will not delete a source directory it found earlier.  This is so the user can extract the source on their own, play around inside the source, and not have to worry about the scripts deleting their work.  Similarly, in 8.3.1 and 8.3.2, when the kernel is compiled, 8.3.1 will not overwrite and already extracted source, and 8.3.2 will never delete the source directory once it is created.    
+
 Batch scripts are included to run build multiple chapters sequentially.  Use when familiar with, and comfortable chapters will compile correctly.
         
-The scripts lfs-8.3.1-root.sh & lfs-8.3.2-root.sh - The Kernel build is broken in two parts.  The reason for this is that the first half extracts the source files and runs 'make mrproper'.  The break is to create the .config file containing kernel compilation options, which is a necessary step prior to compiling the kernel.  The second script then performs the compile.
-        
-Scripts will write output to /mnt/lfs/build-logs for reference.
-	
-Pay attention.  Stop and validate output when requested.  Check the logs (in /mnt/lfs/build-logs) for errors.  Check notes in book and script if they are critical. And, may god have mercy on your soul.
-        
 The last script from the book is 'lfs-9.3-unmount-and-reboot.sh'.  The scripts labeled as 9.4.# will build BLFS packages to get the process started.  Once your LFS boots, read below to run this and begin the process by compiling some additional critical components while in the host system.
-             
+   
+Returning after rebooting Host OS
+---------------------------------
 
+If shutting down the Host OS, perform the following steps on rebooting.
+
+    After Chapter 5 is complete:
+        --> sudo -i
+        --> cd /root/lfs
+        --> ./lfs-remount-root.sh
+        
+    After Chapter 6 is complete (or to chroot to LFS when system is complete):
+        --> sudo -i
+        --> cd /root/lfs
+        --> ./lfs-remount-root.sh
+        --> ./lfs-chroot-root.sh 
+                  
 Tested Host OS  
 --------------
 
@@ -202,41 +224,6 @@ Exit Return Codes
     127 Non-Fatal - lfs-6.x-script-footer.sh not found 
     4   Non-Fatal - Error count in logs > 0, advised to review before proceeding.
 
-  	
-Returning after rebooting Host OS
----------------------------------
-
-    After Chapter 5 is complete:
-        --> sudo -i
-        --> cd /root/lfs
-        --> ./lfs-remount-root.sh
-        
-    After Chapter 6 is complete (or to chroot to LFS when system is complete):
-        --> sudo -i
-        --> cd /root/lfs
-        --> ./lfs-remount-root.sh
-        --> ./lfs-chroot-root.sh 
-        
-Other
------
-
-    While working in the bulk of chapter 5, the scripts are located at  
-    '/home/lfs/lfs' where  they are actually run by the 'lfs' user.  Similarly, 
-    in much of chapter 6, the chrooted 'root' user will be running the scripts  
-    from '$LFS_MOUNT_DIR/root/lfs'. 
-    
-    Therefore, if any changes are made to the scripts located at 
-    '/root/lfs', they will need to be copied to the appropriate
-    location for the 'lfs' or chrooted 'root' user in Ch 5 and 6.
-       
-    Also, unlike most scripts, after the kernel is compiled in 8.3.2, the script
-		does not delete the unpacked source directory in /sources.  This is
-		because it may be necessary to re-compile the kernel with different
-		options if there is a kernel panic on boot.  It also will make it
-		easier to test different kernel options and re-compile without
-		having to extract the source each time.  
-    
-
 TODO
 ----
 
@@ -248,7 +235,7 @@ TODO
     lfs-6.0-restore-tools-from-backup-root.sh - Needs to be cleaned up and tested.
     
     Beyond Linux From Scratch - Scripts lfs-9.4.X and in the BLFS are, as of this
-    writing, being started on.  
+    writing, being worked on.  
     
     Review error code numbering scheme, and possibly include error code checks
     in section batch scripts.
@@ -258,7 +245,7 @@ TODO
 Beyond Linux From Scratch Preparation
 --------------------------------------
 
-Becaise the basic LFS installation is very limited, this 9.4 section includes
+Because the basic LFS installation is very limited, this 9.4 section includes
 builds for additional tools like openssl, wget, and git to facilitate building
 the Beyond Linux From Scratch components when booted into our new LFS instance.
 

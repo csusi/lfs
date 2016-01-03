@@ -1,7 +1,7 @@
 Linux From Shell
 ================
 
-A Linux From Scratch implementation (7.8) with built in shell scripts to speed builds.
+A Linux From Scratch implementation (7.8) using basic shell scripts.
 
 The purpose of this project is to:
 
@@ -221,7 +221,7 @@ Returning after rebooting Host OS
         --> cd /root/lfs
         --> ./lfs-remount-root.sh
         
-    After Chapter 6 is complete:
+    After Chapter 6 is complete (or to chroot to LFS when system is complete):
         --> sudo -i
         --> cd /root/lfs
         --> ./lfs-remount-root.sh
@@ -263,20 +263,20 @@ TODO
     Review error code numbering scheme, and possibly include error code checks
     in section batch scripts.
     
-	  Create a version for SystemD
+    Create a version for SystemD
 	
 Beyond Linux From Scratch Preparation
 --------------------------------------
 
-   Run this as root from host OS. Gets source files like Ch 3.1
-	 --> ./lfs-9.4.1-blfs-prep-root.sh  
-	 		mount lfs & swap partition
-	 		create /sources/blfs  and /build-logs/blfs
-	 		wget sources to  /sources/blfs
-	 		pushd  $LFS_MOUNT_DIR/sources
-			md5sum -c $LFS_MOUNT_DIR/sources/md5sums
-			popd
-	 		
-	  Chroot to LFS
-	  
+Becaise the basic LFS installation is very limited, this 9.4 section includes
+builds for additional tools like openssl, wget, and git to facilitate building
+the Beyond Linux From Scratch components when booted into our new LFS instance.
+
+See the blfs-wget-list file for details of what each section builds.
+
+     --> ./lfs-9.4.1-root.sh  
+     --> ./lfs-chroot-root.sh
+     --> ./lfs-9.4.2-chroot.sh  
+     And keep installing packages in rest of Ch. Section.
+	
 	  

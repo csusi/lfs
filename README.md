@@ -3,20 +3,19 @@ Linux From Shell
 
 A Linux From Scratch implementation (7.8) with built in shell scripts to speed builds.
 
-The purpose of this project is to: 
+The purpose of this project is to:
+
 0. Build Linux, from scratch
 0. Speed up the process a little
 0. Learn by doing and tinkering
-       
+
 The scripts will build a working LFS system, and some initial BLFS packages.  
-    
-    
+
 Instructions:
+--------------
 
-    1) Build a Linux Host.  See below for a tested VirtualBox instance, which
-        is known to work.
-
-    2) Retrieve scripts.  
+0. Build a Linux Host.  See below for a tested VirtualBox instance, which is known to work.
+0. Retrieve scripts.  
         --> sudo -i  
         --> cd /root   (If not there)
         --> git clone https://github.com/csusi/lfs.git 

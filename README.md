@@ -17,11 +17,10 @@ Instructions:
 0. Build a Linux Host.  See below for a tested VirtualBox instance, which is known to work.
 0. Retrieve scripts.  
   --> sudo -i  
-  --> cd /root   (If not there) 
-  --> git clone https://github.com/csusi/lfs.git  
+  --> cd /root ; git clone https://github.com/csusi/lfs.git  
   --> chmod 770 lfs ; cd lfs ; chmod 760 *  
- If working on a branch, change to branch..  
- --> git checkout -b rb7.8 origin/rb7.8  
+ If working on a branch, change to branch (Only a master, not necessary at this time)  
+ ~~--> git checkout -b rb7.8 origin/rb7.8~~  
 0. Review and update the file 'lfs-include.sh'. Some changes may be required for local needs. Especially...
 
     $LFS_TIME_ZONE - sets the time zone for new LFS OS  

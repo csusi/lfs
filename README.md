@@ -66,7 +66,9 @@ Instructions:
         in the host system.
              
 
-This version (7.8) has been tested on:  
+Tested Host OS  
+--------------
+
     Linux Mint v17.2 xfce 64-bit in VirtualBox v5.0.12.  
         Create Virtual Machine...  
             Name: mint17.2-xfce-64b-lfs (Type: Linux; Version: Ubuntu 64-bit)  
@@ -166,7 +168,9 @@ This version (7.8) has been tested on:
                 sdb2 - Boot - Primary - linux (83) - Rest of HDD  
         Shut down & copy VM for fresh prepped host OS.   
         
-Kernel Configuration for 'make menuconfig' when building the LFS kernel:
+Kernel Configuration for 'make menuconfig'
+------------------------------------------
+
     For a VirtualBox guest instance, inside menuconfig make the following changes.
     Be sure to select built-in (*) and not module (M):
         - Device Drivers, Generic Driver Option, DISABLE support for uevent helper
@@ -184,7 +188,11 @@ Kernel Configuration for 'make menuconfig' when building the LFS kernel:
         - Device Drivers, Network device support, ethernet driver support, AMD PCnet32 PCI support
         - File System, Ext3 Journaling file system support
 
-Exit Return Codes (Expected to do more with this for running in batches):
+Exit Return Codes
+-----------------
+
+(Expected to do more with this for running in batches):
+
     1
     2   Fatal - No tarballs found    
     3   Fatal - multiple tarballs found 
@@ -205,7 +213,9 @@ Exit Return Codes (Expected to do more with this for running in batches):
     4   Non-Fatal - Error count in logs > 0, advised to review before proceeding.
 
   	
-Returning from shutting down the machine:
+Returning after rebooting Host OS
+---------------------------------
+
     After Chapter 5 is complete:
         --> sudo -i
         --> cd /root/lfs
@@ -217,7 +227,9 @@ Returning from shutting down the machine:
         --> ./lfs-remount-root.sh
         --> ./lfs-chroot-root.sh 
         
-Other:   
+Other
+-----
+
     While working in the bulk of chapter 5, the scripts are located at  
     '/home/lfs/lfs' where  they are actually run by the 'lfs' user.  Similarly, 
     in much of chapter 6, the chrooted 'root' user will be running the scripts  
@@ -235,7 +247,9 @@ Other:
 		having to extract the source each time.  
     
 
-TODO:
+TODO
+----
+
     In addition to any TODO still in the scripts...
     
     Might want to get rid of those very long batch sets.  Esp since I think one that 
@@ -252,6 +266,8 @@ TODO:
 	  Create a version for SystemD
 	
 Beyond Linux From Scratch Preparation
+--------------------------------------
+
    Run this as root from host OS. Gets source files like Ch 3.1
 	 --> ./lfs-9.4.1-blfs-prep-root.sh  
 	 		mount lfs & swap partition

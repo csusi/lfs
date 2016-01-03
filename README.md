@@ -16,17 +16,17 @@ Instructions:
 
 0. Build a Linux Host.  See below for a tested VirtualBox instance, which is known to work.
 0. Retrieve scripts.  
-..* --> sudo -i  
-..* --> cd /root   (If not there) 
-..* --> git clone https://github.com/csusi/lfs.git 
-..* --> chmod 770 lfs ; cd lfs ; chmod 760 *
-..* If working on a branch, change to branch..
-..* --> git checkout -b rb7.8 origin/rb7.8
+  --> sudo -i  
+  --> cd /root   (If not there) 
+  --> git clone https://github.com/csusi/lfs.git  
+  --> chmod 770 lfs ; cd lfs ; chmod 760 *  
+ If working on a branch, change to branch..  
+ --> git checkout -b rb7.8 origin/rb7.8  
 0. Review and update the file 'lfs-include.sh'. Some changes may be required for local needs. Especially...
 
-    $LFS_TIME_ZONE - sets the time zone for new LFS OS
-    $PAGE - Sets default page size for printing based on country standard
-    Local Networking Settings for Ch. 7.5 
+    $LFS_TIME_ZONE - sets the time zone for new LFS OS  
+    $PAGE - Sets default page size for printing based on country standard  
+    Local Networking Settings for Ch. 7.5   
         
     4) Need to be root to start:    
         --> sudo -i
@@ -65,105 +65,105 @@ Instructions:
         in the host system.
              
 
-This version (7.8) has been tested on: 
-    Linux Mint v17.2 xfce 64-bit in VirtualBox v5.0.12.
-        Create Virtual Machine...
-            Name: mint17.2-xfce-64b-lfs (Type: Linux; Version: Ubuntu 64-bit)
-            Memory: 2 GB RAM
-            Create a virtual hard disk now...
-                VDI(VirtualBox Disk Image)
-                Dynamically Allocated
-                Name: mint17.2-xfce-64b-lfs-sda
-                Size: 20 GB 
-            Additional Settings...
-                General-> Advanced -> Shared Clipboard -> Bidirectional  (for convenience)
-                General-> Advanced -> Drag'n'Drop -> BiDirectional (for convenience)
-                System -> Motherboard -> Chipset -> PIIX3 
-                System -> Motherboard -> Pointing Device -> USB Tablet 
-                System -> Motherboard -> Extended Features -> Enable I/O APIC 
-                System -> Motherboard -> Extended Features -> Disable EFI 
-                System -> Motherboard -> Extended Features -> Enable Hardware Clock in UTC Time 
-                System -> Processor -> 4 CPUs (NOT DEFAULT SETTING)
-                System -> Processor -> Execution Cap 100% 
-                System -> Processor -> Disable Enable PAE/NX 
-                System -> Acceleration -> Paravirtualization Interface -> Default 
-                System -> Acceleration -> Enable VT-x/AMD-v 
-                System -> Acceleration -> Enable Nested Paging 
-                Display -> Screen -> Video Memory -> 128 MB (NOT DEFAULT SETTING)
-                Display -> Screen -> Monitor Count -> 1
-                Display -> Screen -> Scale Factor -> 100% 
-                Display -> Screen -> Acceleration -> Enable 3D Acceleration (NOT DEFAULT SETTING)
-                Display -> Screen -> Enable 2D Video Acceleration 
-                Display -> Remote Display -> Disabled 
-                Display -> Video Capture -> Disabled 
-                Storage -> Select Empty Optical Disk -> 
-                    Choose Optical Disk File... -> F:\ISOs\Linux-Distros\linuxmint-17.2-xfce-64bit.iso
-                Storage -> Select Controller SATA (where other HDD is) ->
-                    Add New Storage Attachment -> Add Hard Disk -> Create New Disk -> 
-                    VDI(VirtualBox Disk Image)
-                    Dynamically Allocated
-                    Name: mint17.2-xfce-64b-lfs-sdb
-                    Size: 10 GB  (This will be your new Linux system, allocate larger if desired)
-                Network -> Adapter 1 -> Enable Network Adapter 
-                Network -> Adapter 1 -> Attached to -> Bridged Adaptor (NOT DEFAULT SETTING)
-        Install Linux Mint (This is the LFS host system)
-            Language: English (or desired language)
-            Installation Type: Something Else
-                Create New Partition Table on /dev/sda
-                Use /dev/sda free space to create swap partition 
-                    2048 MB (RAM size or as desired), Primary Partition 
-                    Locate at beginning of space, use as: swap area
-                Use /dev/sda free space to create main system partition 
-                    19427 MB (or remainder of space), Primary Partition 
-                    Start at begining of this space, Ext4, Mount point: "/"
-                (Note: Create alternative partitions for host as desired on 
-                  /dev/sda only.  /dev/sdb will be used for the new Linux OS.)
-                Boot loader installation: /dev/sda
-                Install Now...
-                Set as needed: Location, Keyboard Layout, User ID, Computer Name
-                    Who are you? -> Log in automatically -> Enable (for convenience)
-        Boot Linux Instance
-        In VirtualBox Guest Window -> Devices -> Insert Guest Additions CD Image...
-        Install VirtualBox Guest Tools
-            Open Terminal 
-            /media/css/VBOXADDITIONS_5.0.12_104815  (or location)
-            Purge existing tools: sudo apt-get purge virtualbox*   (probably 3 to remove)
-            Install VirtualBox Linux Additions: sudo bash ./VBoxLinuxAdditions.run
-            Close terminal window
-            In File Manager (click on Home on desktop) eject the VirtualBox CD
-        Restart Linux Instance
-        Open terminal window, verify VBox Additions: dmesg | egrep -i 'virtualbox|vbox' 
-        Start -> System -> Screensaver -> Mode: Disable (waste of CPU when compiling)
-        Optional: Shut down & copy VM for fresh host OS install.  
-        sudo apt-get install git -y            # Or if this is how you want to transfer scripts over
-        Configure git
-            git config --global user.name "me"
-            git config --global user.email "me@here.com"
-            su  # To keep git settings consistent between local user and root
-            git config --global user.name "me"
-            git config --global user.email "me@here.com"       
-        sudo ln -sf /bin/bash /bin/sh        # Host system requirement for LFS             
-        sudo apt-get install build-essential -y   # Critical for compiling source
-        sudo apt-get install -y ncurses-dev  
-            # Note: In LFS 7.6 this was critical for ch6.70 or will get 
-            # "Checking for tgetent() ... NOT FOUND!" when running configure.  
-            # Not tested without installing in a lfs7.8 build and beyond, just 
-            # so installing it anyhow to ensure it's present.
-        sudo apt-get install -y texinfo    # Installes makeinfo requirement
-        sudo apt-get update
-        sudo apt-get upgrade
-        Install a text editor you really like: 
-            sudo apt-get install geany -y
-        Allow your GUI login to access & update contents of /root (where script files will be)
-            sudo usermod -a -G root <<GUI Login>>
-            sudo chmod -R 770 /root         
-        Optional: Install a graphical partition editor: sudo apt-get install gparted -y                  
-        Configure LFS Virtual HDD (This follows book 2.2. Creating a New Partition)
-            Assuming this is a second virtual HDD (15 GB), configured as SCSI in VMWare
-            or SATA in VirtualBox.  Using cfdisk or disk partition program of choice:          
-                sdb1 - Not Boot - Primary - Linux swap (82) - 1x RAM or as desired (2GB VM=2048)
-                sdb2 - Boot - Primary - linux (83) - Rest of HDD
-        Shut down & copy VM for fresh prepped host OS.  
+This version (7.8) has been tested on:  
+    Linux Mint v17.2 xfce 64-bit in VirtualBox v5.0.12.  
+        Create Virtual Machine...  
+            Name: mint17.2-xfce-64b-lfs (Type: Linux; Version: Ubuntu 64-bit)  
+            Memory: 2 GB RAM  
+            Create a virtual hard disk now...  
+                VDI(VirtualBox Disk Image)  
+                Dynamically Allocated  
+                Name: mint17.2-xfce-64b-lfs-sda  
+                Size: 20 GB   
+            Additional Settings...  
+                General-> Advanced -> Shared Clipboard -> Bidirectional  (for convenience)  
+                General-> Advanced -> Drag'n'Drop -> BiDirectional (for convenience)  
+                System -> Motherboard -> Chipset -> PIIX3   
+                System -> Motherboard -> Pointing Device -> USB Tablet  
+                System -> Motherboard -> Extended Features -> Enable I/O APIC   
+                System -> Motherboard -> Extended Features -> Disable EFI   
+                System -> Motherboard -> Extended Features -> Enable Hardware Clock in UTC Time   
+                System -> Processor -> 4 CPUs (NOT DEFAULT SETTING)  
+                System -> Processor -> Execution Cap 100%   
+                System -> Processor -> Disable Enable PAE/NX   
+                System -> Acceleration -> Paravirtualization Interface -> Default   
+                System -> Acceleration -> Enable VT-x/AMD-v   
+                System -> Acceleration -> Enable Nested Paging   
+                Display -> Screen -> Video Memory -> 128 MB (NOT DEFAULT SETTING)  
+                Display -> Screen -> Monitor Count -> 1  
+                Display -> Screen -> Scale Factor -> 100%   
+                Display -> Screen -> Acceleration -> Enable 3D Acceleration (NOT DEFAULT SETTING)  
+                Display -> Screen -> Enable 2D Video Acceleration   
+                Display -> Remote Display -> Disabled   
+                Display -> Video Capture -> Disabled   
+                Storage -> Select Empty Optical Disk ->   
+                    Choose Optical Disk File... -> F:\ISOs\Linux-Distros\linuxmint-17.2-xfce-64bit.iso  
+                Storage -> Select Controller SATA (where other HDD is) ->  
+                    Add New Storage Attachment -> Add Hard Disk -> Create New Disk ->   
+                    VDI(VirtualBox Disk Image)  
+                    Dynamically Allocated  
+                    Name: mint17.2-xfce-64b-lfs-sdb  
+                    Size: 10 GB  (This will be your new Linux system, allocate larger if desired)  
+                Network -> Adapter 1 -> Enable Network Adapter   
+                Network -> Adapter 1 -> Attached to -> Bridged Adaptor (NOT DEFAULT SETTING)  
+        Install Linux Mint (This is the LFS host system)  
+            Language: English (or desired language)  
+            Installation Type: Something Else  
+                Create New Partition Table on /dev/sda  
+                Use /dev/sda free space to create swap partition   
+                    2048 MB (RAM size or as desired), Primary Partition   
+                    Locate at beginning of space, use as: swap area  
+                Use /dev/sda free space to create main system partition   
+                    19427 MB (or remainder of space), Primary Partition   
+                    Start at begining of this space, Ext4, Mount point: "/"  
+                (Note: Create alternative partitions for host as desired on   
+                  /dev/sda only.  /dev/sdb will be used for the new Linux OS.)  
+                Boot loader installation: /dev/sda  
+                Install Now...  
+                Set as needed: Location, Keyboard Layout, User ID, Computer Name  
+                    Who are you? -> Log in automatically -> Enable (for convenience)  
+        Boot Linux Instance  
+        In VirtualBox Guest Window -> Devices -> Insert Guest Additions CD Image...  
+        Install VirtualBox Guest Tools  
+            Open Terminal   
+            /media/css/VBOXADDITIONS_5.0.12_104815  (or location)  
+            Purge existing tools: sudo apt-get purge virtualbox*   (probably 3 to remove)  
+            Install VirtualBox Linux Additions: sudo bash ./VBoxLinuxAdditions.run  
+            Close terminal window  
+            In File Manager (click on Home on desktop) eject the VirtualBox CD  
+        Restart Linux Instance  
+        Open terminal window, verify VBox Additions: dmesg | egrep -i 'virtualbox|vbox'   
+        Start -> System -> Screensaver -> Mode: Disable (waste of CPU when compiling)  
+        Optional: Shut down & copy VM for fresh host OS install.    
+        sudo apt-get install git -y     # Or if this is how you want to transfer scripts over  
+        Configure git  
+            git config --global user.name "me"  
+            git config --global user.email "me@here.com"  
+            su  # To keep git settings consistent between local user and root  
+            git config --global user.name "me"  
+            git config --global user.email "me@here.com"         
+        sudo ln -sf /bin/bash /bin/sh        # Host system requirement for LFS              
+        sudo apt-get install build-essential -y   # Critical for compiling source  
+        sudo apt-get install -y ncurses-dev    
+            # Note: In LFS 7.6 this was critical for ch6.70 or will get   
+            # "Checking for tgetent() ... NOT FOUND!" when running configure.   
+            # Not tested without installing in a lfs7.8 build and beyond, just   
+            # so installing it anyhow to ensure it's present.  
+        sudo apt-get install -y texinfo    # Installes makeinfo requirement  
+        sudo apt-get update  
+        sudo apt-get upgrade  
+        Install a text editor you really like:   
+            sudo apt-get install geany -y  
+        Allow your GUI login to access & update contents of /root (where script files will be)  
+            sudo usermod -a -G root <<GUI Login>>  
+            sudo chmod -R 770 /root       
+        Optional: Install a graphical partition editor: sudo apt-get install gparted -y    
+        Configure LFS Virtual HDD (This follows book 2.2. Creating a New Partition)  
+            Assuming this is a second virtual HDD (15 GB), configured as SCSI in VMWare  
+            or SATA in VirtualBox.  Using cfdisk or disk partition program of choice:        
+                sdb1 - Not Boot - Primary - Linux swap (82) - 1x RAM or as desired (2GB VM=2048)  
+                sdb2 - Boot - Primary - linux (83) - Rest of HDD  
+        Shut down & copy VM for fresh prepped host OS.   
         
 Kernel Configuration for 'make menuconfig' when building the LFS kernel:
     For a VirtualBox guest instance, inside menuconfig make the following changes.

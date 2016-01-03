@@ -19,8 +19,8 @@ Instructions:
     2) Retrieve scripts.  
         --> sudo -i  
         --> cd /root   (If not there)
-        --> git clone https://github.com/csusi/lfs.git ; chmod -R 760 lfs
-        --> cd lfs
+        --> git clone https://github.com/csusi/lfs.git 
+        --> chmod 770 lfs ; cd lfs ; chmod 760 *
        If working on a branch, change to branch..
         --> git checkout -b rb7.8 origin/rb7.8
 

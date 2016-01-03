@@ -1,14 +1,12 @@
 Linux From Shell
 
 Introduction:
-  
-    The purpose of this project is to: 
-      - Build Linux, from scratch
-      - Speed up the process a little
-      - Learn by doing and tinkering
+	The purpose of this project is to: 
+  	- Build Linux, from scratch
+    - Speed up the process a little
+    - Learn by doing and tinkering
        
-    The scripts will build a working LFS system.  Or at least
-    they have, your mileage may vary.   
+    The scripts will build a working LFS system, and some initial BLFS packages.  
     
     
 Instructions:
@@ -185,8 +183,6 @@ Kernel Configuration for 'make menuconfig' when building the LFS kernel:
         - Device Drivers, Fusion MPT device support --> Fusion MTP ScsiHost SAS Enabled
         - Device Drivers, Network device support, ethernet driver support, AMD PCnet32 PCI support
         - File System, Ext3 Journaling file system support
-
-
 
 Exit Return Codes (Expected to do more with this for running in batches):
     1

@@ -12,6 +12,7 @@ Introduction:
     
     
 Instructions:
+
     1) Build a Linux Host.  See below for a tested VirtualBox instance, which
         is known to work.
 

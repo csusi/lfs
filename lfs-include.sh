@@ -172,7 +172,7 @@ function show_build_errors {
   LFS_ERROR_COUNT=0
 
 	LFS_WARNING_COUNT=$(grep -n " [Ww]arnings*:* " $ROOT_PATH/build-logs/$LFS_SECTION* | wc -l)
-	LFS_ERROR_COUNT=$(grep -n " [Ee]rrors*:* " $ROOT_PATH/build-logs/$LFS_SECTION* | wc -l)
+	LFS_ERROR_COUNT=$(grep -n " [Ee]rrors*:* \|^FAIL:" $ROOT_PATH/build-logs/$LFS_SECTION* | wc -l)
 	
 	
 #  ### Commenting this block out because some sections generate a lot of warnings that
@@ -187,7 +187,7 @@ function show_build_errors {
 
 	if [ $LFS_ERROR_COUNT -ne 0 ]; then
 	    echo "*** $LFS_ERROR_COUNT Errors Found In Build Logs for ... $LFS_SOURCE_FILE_NAME"
-	    grep -n " [Ee]rrors*:* " $ROOT_PATH/build-logs/$LFS_SECTION*
+	    grep -n " [Ee]rrors*:* \|^FAIL:" $ROOT_PATH/build-logs/$LFS_SECTION*
 	    echo "Compare against known good logs at: http://www.linuxfromscratch.org/lfs/build-logs"
 	else 
 		  echo "*** $LFS_ERROR_COUNT Errors Found In Build Logs for ... $LFS_SOURCE_FILE_NAME"
@@ -246,8 +246,8 @@ function show_first_ten_errors_in_section_logs {
 	echo "*** Displaying first 10 errors from logs."
 	for (( i=$START_SECTION ; i <= $END_SECTION ; i++ ))
 	do
-		echo "--> grep -n \" [Ee]rrors*:* \" $LFS_MOUNT_DIR/build-logs/$CHAPTER.$i-* | head -n 10"
-		grep -n " [Ee]rrors*:* " $ROOT_PATH/build-logs/$CHAPTER.$i-* | head -n 10
+		echo "--> grep -n \" [Ee]rrors*:* \|^FAIL:\" $ROOT_PATH/build-logs/$CHAPTER.$i-* | head -n 10"
+		grep -n " [Ee]rrors*:* \|^FAIL:" $ROOT_PATH/build-logs/$CHAPTER.$i-* | head -n 10
 		echo ""
 	done
 }

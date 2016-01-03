@@ -12,6 +12,7 @@ LFS_SECTION=6.17
 LFS_SOURCE_FILE_PREFIX=gcc
 LFS_BUILD_DIRECTORY=gcc-build    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
+echo "Chapter $LFS_SECTION $LFS_SOURCE_FILE_PREFIX - Started on $(date -u)" >> /build-logs/0-milestones.log
 
 echo "*** Validating the environment."
 check_user root
@@ -149,6 +150,8 @@ echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
 rm -rf $LFS_BUILD_DIRECTORY
+
+echo "Chapter $LFS_SECTION $LFS_SOURCE_FILE_PREFIX - Finished on $(date -u)" >> /build-logs/0-milestones.log
 
 
 ###### Not using standard 6.x footer I created, because I am inluding a STOP!! notice at end of script to verify all is well

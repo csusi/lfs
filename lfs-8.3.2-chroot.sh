@@ -12,6 +12,7 @@ LFS_SOURCE_FILE_PREFIX=linux
 LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
+echo "Chapter 8.3.2 - Started Kernel Compiled on $(date -u)" >> /build-logs/0-milestones.log
 
 cd $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
 
@@ -49,7 +50,7 @@ EOF
 ### kernel if desired.  At this point the LFS build is done, and /sources
 ### could be deleted if desired.
 
-echo "Chapter 8.3.2 - Kernel Compiled on $(date -u)" >> /build-logs/0-milestones.log
+echo "Chapter 8.3.2 - Finished Kernel Compiled on $(date -u)" >> /build-logs/0-milestones.log
 
 show_build_errors ""
 capture_file_list "" 

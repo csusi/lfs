@@ -11,6 +11,7 @@ LFS_SECTION=5.5
 LFS_SOURCE_FILE_PREFIX=gcc
 LFS_BUILD_DIRECTORY=gcc-build    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
+echo "Chapter $LFS_SECTION $LFS_SOURCE_FILE_PREFIX - Started on $(date -u)" >> /build-logs/0-milestones.log
 
 echo "*** Validating the environment."
 check_user lfs
@@ -95,6 +96,8 @@ echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
 rm -rf $LFS_BUILD_DIRECTORY
+
+echo "Chapter $LFS_SECTION $LFS_SOURCE_FILE_PREFIX - Finished on $(date -u)" >> /build-logs/0-milestones.log
 
 echo ""
 echo "*** v7.8 Note: If there is an error for no include path for stdc-predef.h, it is probably harmless."

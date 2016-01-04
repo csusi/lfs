@@ -16,7 +16,7 @@ Instructions:
 
 0. Build a Linux Host.  See below for a tested VirtualBox instance, which is known to work.
 0. Retrieve scripts.  
-  --> sudo -i  
+  --> su -  
   --> cd /root ; git clone https://github.com/csusi/lfs.git  
   --> chmod 770 lfs ; cd lfs ; chmod 760 *  
  If working on a branch, change to branch (Only a master, not necessary at this time)  
@@ -27,11 +27,7 @@ Instructions:
     $PAGE - Sets default page size for printing based on country standard  
     Local Networking Settings for Ch. 7.5   
         
-0. Need to be root to start:    
-  --> sudo -i  
-  --> cd /root/lfs 
-
-0. Build the LFS system starting below. Each script covers a section of the book, and are named in the following pattern:
+0. In a terminal window, as 'root' in \root\lfs, begin to build the LFS system starting below. Each script covers a section of the book, and are named in the following pattern:
 
         XXX-C.S-YYYY.sh    
           XXX - LFS book

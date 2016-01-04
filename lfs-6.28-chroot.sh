@@ -43,7 +43,7 @@ time {
              --disable-libblkid      \
              --disable-libuuid       \
              --disable-uuidd         \
-             --disable-fsck
+             --disable-fsck				&> $LFS_LOG_FILE-config.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \

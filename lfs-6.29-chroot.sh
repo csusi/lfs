@@ -30,7 +30,7 @@ time {
 	
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 	
-	patch -Np1 -i ../coreutils-8.24-i18n-1.patch 
+	patch -Np1 -i ../coreutils-8.24-i18n-1.patch  &> $LFS_LOG_FILE-patch.log 
 	sed -i '/tests\/misc\/sort.pl/ d' Makefile.in
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"

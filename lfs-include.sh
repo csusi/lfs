@@ -29,11 +29,7 @@ LFS_TIME_ZONE=America/Chicago
 LFS_PAGE=letter
 
 ### Used 5.36 to make a backup of completed tools and move build-logs
-### TODO: if this becomes ../lfs-backup then may be able to keep build on host OS contained to user home dir
-### TODO: I think I took out making backups of ch5 build logs, so LFS_BUILD_LOGS_ARCHIVE_DIR is no longer needed.
 LFS_TOOLS_BACKUP_DIR=/root/lfs-backup/tools
-LFS_BUILD_LOGS_ARCHIVE_DIR=/root/lfs-backup/ch5-build-logs  
-
 
 ### Used in 6.25 to set the password for root on the new system
 ### TODO: I tried to automate this, but 'passwd' wasn't giving me any love

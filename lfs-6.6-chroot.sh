@@ -66,6 +66,8 @@ nogroup:x:99:
 users:x:999:
 EOF
 
+########## Chapter Clean-Up ##########
+
 show_build_errors ""
 capture_file_list ""
 

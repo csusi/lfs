@@ -21,8 +21,8 @@ echo "*** To run the following commands, the user needs to exit back to the Host
 echo "*** OS and re-enter the LFS instance.  This requires three exits for the "
 echo "*** three levels of shells launched in Ch 6.4, 6.6, & 6.36.  Once at the "
 echo "*** HOST OS, run the chroot command below, followed by the command to remove "
-echo "*** debug (if desired), and then finish up the final chapter section. 
-echo "*** 
+echo "*** debug (if desired), and then finish up the final chapter section. "
+echo "*** " 
 echo "*** -> exit "
 echo "*** -> exit "
 echo "*** -> exit "

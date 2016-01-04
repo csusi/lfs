@@ -14,14 +14,24 @@ check_lfs_partition_mounted_and_swap_on
 
 echo ""
 echo "*** Re-entering the chroot environment."
-echo "*** Note: this is the chroot command from the end of Ch 6 that uses "
-echo "*** the Bash shell at /bin/bash, and not /tools/bin/bash as done"
-echo "*** earlier. If Ch 6 is not completed, this will not work."
+echo ""
+if [ -d "$LFS_MOUNT_DIR/tools" ]; then
+  echo "*** NOTE: It appears the LFS mount dir has the /tools directory still."  	
+	echo "*** Per 6.73, the tools directory is no longer needed for your LFS build."
+	echo "*** Included in the additional BLFS scripts, are scripts to build  Tcl, "
+	echo "*** Expect, and DejaGNU.  To delete the tools directory, run the command:"
+	echo "*** --> rm -rf /tools "
+	echo "***"
+fi
+
+echo "*** NOTE: This is the chroot command from the end of Ch 6 that uses "
+echo "*** the new LFS-compiled Bash shell at /bin/bash, and not /tools/bin/bash"
+echo "*** done earlier. IF CH. 6 HAS NOT BEEN COMPLETED, THIS MAY CAUSE ISSUES."
 echo "*** "
 echo "*** To return to scripts directory, run:"
 echo "*** --> cd /root/lfs "
 echo "***"
-echo "*** Note: If coming back to do a kernel re-compile, do the following:"
+echo "*** NOTE: If coming back to do a kernel re-compile, do the following:"
 echo "*** --> cd /root/lfs "
 echo "*** --> pushd /sources/linux*"
 echo "*** (optional - will reset current .config) --> make defconfig "

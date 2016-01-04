@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo '### Linux From Scratch Ch 2.3 to 4.3 (chrooted to lfs partition as 'root')'
+echo '### Linux From Scratch Ch 7.2 to 8.2 (chrooted to lfs partition as 'root')'
 echo "### ======================================================================="
 echo 
 
@@ -10,6 +10,7 @@ source ./lfs-include.sh
 
 echo "*** Validating the environment."
 check_user root
+check_chroot_to_lfs_rootdir 
 
 ./lfs-7.2-chroot.sh
 

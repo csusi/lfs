@@ -11,8 +11,12 @@ LFS_SECTION=8.3
 LFS_SOURCE_FILE_PREFIX=linux
 LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
-
 echo "Chapter 8.3.2 - Started Kernel Compiled on $(date -u)" >> /build-logs/0-milestones.log
+
+echo "*** Validating the environment."
+check_user root
+check_chroot_to_lfs_rootdir 
+
 
 cd $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
 
@@ -52,6 +56,7 @@ EOF
 
 echo "Chapter 8.3.2 - Finished Kernel Compiled on $(date -u)" >> /build-logs/0-milestones.log
 
+echo ""
 show_build_errors ""
 capture_file_list "" 
 chapter_footer
@@ -60,7 +65,7 @@ echo "*** --> ./lfs-8.4-chroot.sh"
 echo "***"
 echo "*** If performing a kernel re-compile and Ch 8.4 -> 9.1 are complete, then "
 echo "*** --> logout "
-echo "*** --> ./lfs-9.3-unmount-and-reboot.sh"
+echo "*** --> ./lfs-9.3-reboot.sh"
 echo ""
 
 if [ $LFS_ERROR_COUNT -ne 0 ]; then

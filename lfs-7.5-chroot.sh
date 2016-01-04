@@ -13,9 +13,8 @@ LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
-### TODO: Some kind of check that user is in chrooted to $LFS_MOUNT_DIR
 check_user root
-
+check_chroot_to_lfs_rootdir 
 
 ########## Begin LFS Chapter Content ##########
 
@@ -61,11 +60,28 @@ cat > /etc/hosts << EOF
 EOF
 
 ########## Chapter Clean-Up ##########
+echo ""
+echo "*** Start  /etc/sysconfig/ifconfig.eth0"
+cat /etc/sysconfig/ifconfig.eth0 | tee $LFS_LOG_FILE-ifconfig-eth0.log
+echo "*** End "
 
-cat /etc/sysconfig/ifconfig.eth0 > $LFS_LOG_FILE-ifconfig-eth0.log
-cat /etc/resolv.conf > $LFS_LOG_FILE-resolv.log
-cat /etc/hostname > $LFS_LOG_FILE-hostname.log
-cat /etc/hosts > $LFS_LOG_FILE-hosts.log
+echo ""
+echo "*** Start /etc/resolv.conf"
+cat /etc/resolv.conf | tee $LFS_LOG_FILE-resolv.log
+echo "*** End /etc/resolv.conf"
+
+
+echo ""
+echo "*** Start /etc/hostname"
+cat /etc/hostname | tee $LFS_LOG_FILE-hostname.log
+echo "*** End /etc/hostname"
+
+
+echo ""
+echo "*** Start /etc/hosts"
+cat /etc/hosts | tee $LFS_LOG_FILE-hosts.log
+echo "*** End /etc/hosts"
+
 
 ### There is no need to show errors as nothing is being written to build-logs.
 #show_build_errors ""

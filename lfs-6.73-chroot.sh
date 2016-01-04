@@ -7,22 +7,29 @@ if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
 source ./lfs-include.sh
 
+LFS_SECTION=6.73
+LFS_SOURCE_FILE_PREFIX=cleanup
+LFS_BUILD_DIRECTORY=    # Leave empty if not needed
+LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
+
 echo "*** Validating the environment."
 check_user root     
 check_chroot_to_lfs_rootdir 
 
-rm -rf /tmp/*
+rm -rf /tmp/*  														&> $LFS_LOG_FILE-rm-temp.log
 
-echo "Chapter 6 Completed on $(date -u)" >> $LFS_MOUNT_DIR/build-logs/0-milestones.log
+rm /usr/lib/lib{bfd,opcodes}.a						&> $LFS_LOG_FILE-rm-staticlibs.log
+rm /usr/lib/libbz2.a											&>> $LFS_LOG_FILE-rm-staticlibs.log
+rm /usr/lib/lib{com_err,e2p,ext2fs,ss}.a	&>> $LFS_LOG_FILE-rm-staticlibs.log
+rm /usr/lib/libltdl.a											&>> $LFS_LOG_FILE-rm-staticlibs.log
+rm /usr/lib/libz.a												&>> $LFS_LOG_FILE-rm-staticlibs.log
 
-echo "### Note From Book"
-echo "### Removing /tools will also remove the temporary copies of Tcl, Expect, and DejaGNU which were used"
-echo "### for running the toolchain tests. If you need these programs later on, they will need to be "
-echo "### recompiled and re-installed. The BLFS book has instructions for this"
-echo "### (see http://www.linuxfromscratch.org/blfs/)."
-echo ""
-echo "*** Note: If you delete this, it will delete the /tools/lfs-scripts dir.  "
-echo "*** (not recommended) --> rm -rf /tools"
+echo "Chapter 6 Completed on $(date -u)" >> /build-logs/0-milestones.log
+
+echo "*** NOTE: The /tools directory is no longer necessary.  It can be removed if "
+echo "*** desired.  When running the 'lfs-chroot-root.sh' script to re-enter the"
+echo "*** LFS root partition, if it detects /tools is present, you will be given "
+echo "*** a notice to delete it if desired."
 echo "*** "
 echo "*** Now would also be a good time to shut down and make a back-up VM."
 echo "*** If shutting down do backup the VM, see section on Returning From "

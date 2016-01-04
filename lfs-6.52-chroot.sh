@@ -34,13 +34,13 @@ time {
 	PAGE=$LFS_PAGE ./configure --prefix=/usr 			&> $LFS_LOG_FILE-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
-	make $LFS_MAKE_FLAGS 														&> $LFS_LOG_FILE-make.log
+	make  														&> $LFS_LOG_FILE-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	### None 
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
-	make install $LFS_MAKE_FLAGS 										&> $LFS_LOG_FILE-make-install.log
+	make install  										&> $LFS_LOG_FILE-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	### None
@@ -54,7 +54,12 @@ cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
 rm -rf $LFS_BUILD_DIRECTORY
 
-
+echo ""
+echo "*** NOTE: There have been sporadic issues with this section not compiling.  The cause is"
+echo "*** unknown.  It MAY be because 'make' and 'make install' had been set to use"
+echo "*** multiple processors when compiling, so the -j4 flag has been removed for this"
+echo "*** section.  If this fails, re-run it again.  When it builds correctly also run man-db"
+echo "*** again if it was already built from a batch script."
 show_build_errors ""
 capture_file_list "" 
 chapter_footer

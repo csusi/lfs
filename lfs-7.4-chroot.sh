@@ -14,6 +14,7 @@ LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
 check_user root
+check_chroot_to_lfs_rootdir 
 
 
 ########## Begin LFS Chapter Content ##########
@@ -33,8 +34,11 @@ echo "*** 7.4.2. CD-ROM symlinks"
 echo "*** 7.4.3. Dealing with duplicate devices"
 
 ########## Chapter Clean-Up ##########
+echo ""
+echo "*** Start /etc/udev/rules.d/70-persistent-net.rules"
+cat  /etc/udev/rules.d/70-persistent-net.rules | tee $LFS_LOG_FILE-persistent-net-rules.log
+echo "*** End /etc/udev/rules.d/70-persistent-net.rules"
 
-cat /etc/udev/rules.d/70-persistent-net.rules > $LFS_LOG_FILE-persistent-net-rules.log
 
 echo "################################ STOP ##############################"
 echo "*** Stop & validate network configs in lfs-include.sh & 7.5 script."

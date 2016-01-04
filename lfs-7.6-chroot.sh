@@ -13,8 +13,8 @@ LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
-### TODO: Some kind of check that user is in chrooted to $LFS_MOUNT_DIR
 check_user root
+check_chroot_to_lfs_rootdir 
 
 ########## Begin LFS Chapter Content ##########
 
@@ -75,8 +75,11 @@ echo "*** 7.6.8. The rc.site File "
 ### TODO: Optional.  Review in subsequent pass.
 
 ########## Chapter Clean-Up ##########
+echo ""
+echo "*** Start /etc/inittab"
+cat /etc/inittab | tee $LFS_LOG_FILE-inittab.log
+echo "*** End /etc/inittab "
 
-cat /etc/inittab > $LFS_LOG_FILE-inittab.log
 
 ### Not showing logs or capturing file list.  I'm adding one file.  
 

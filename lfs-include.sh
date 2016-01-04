@@ -61,7 +61,7 @@ LFS_LANG=en_US.UTF-8
 ### Used in 9.1 to set /etc/lsb-release
 LFS_DISTRIB_ID="Linux From Scratch"
 LFS_DISTRIB_RELEASE="7.8"
-LFS_DISTRIB_CODENAME="Susi Linux"
+LFS_DISTRIB_CODENAME="Linux From Scratch"
 LFS_DISTRIB_DESCRIPTION="Linux From Scratch"
 
 

@@ -13,8 +13,8 @@ LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
-### TODO: Some kind of check that user is in chrooted to $LFS_MOUNT_DIR
 check_user root
+check_chroot_to_lfs_rootdir 
 
 ########## Extract Source and Change Directory ##########
 

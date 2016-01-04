@@ -15,12 +15,10 @@ LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
-### TODO: Some kind of check that user is in chrooted to $LFS_MOUNT_DIR
 check_user root
-
+check_chroot_to_lfs_rootdir 
 
 ########## Begin LFS Chapter Content ##########
-
 echo ""
 echo "*** Creating /etc/shells file"
 
@@ -34,8 +32,12 @@ cat > /etc/shells << "EOF"
 EOF
 
 ########## Chapter Clean-Up ##########
+echo ""
+echo "*** Start /etc/shells "
+cat /etc/shells | tee $LFS_LOG_FILE-shells.log
+echo "*** End /etc/shells"
 
-cat /etc/shells > $LFS_LOG_FILE-shells.log
+
 
 echo "Chapter 7 Completed on $(date -u)" >> /build-logs/0-milestones.log
 

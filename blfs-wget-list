@@ -1,4 +1,5 @@
 # Req=Required, Rec=Recommended, Opt=Optional
+# Add Tcl, Expect, and DejaGNU
 
 # 9.4.2 openssl - Req for Cert Auth; Rec cURL; Opt Nettle
 # http://linuxfromscratch.org/blfs/view/stable/postlfs/openssl.html

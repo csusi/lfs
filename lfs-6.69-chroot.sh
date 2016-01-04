@@ -60,7 +60,9 @@ cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
 rm -rf $LFS_BUILD_DIRECTORY
 
-
+echo ""
+echo "*** NOTE: If this fails with errors that it cannot find groff and/or troff, then groff"
+echo "*** did not get built right.  Re-run that section till and resolve errors as needed."
 show_build_errors ""
 capture_file_list "" 
 chapter_footer

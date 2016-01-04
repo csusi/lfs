@@ -16,8 +16,8 @@ LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
-### TODO: Some kind of check that user is in chrooted to $LFS_MOUNT_DIR
 check_user root
+check_chroot_to_lfs_rootdir 
 
 
 ########## Begin LFS Chapter Content ##########
@@ -41,8 +41,11 @@ devtmpfs    /dev    devtmpfs  mode=0755,nosuid    0 0
 EOF
 
 ########## Chapter Clean-Up ##########
+echo ""
+echo "*** Start /etc/fstab"
+cat /etc/fstab | tee $LFS_LOG_FILE-fstab.log
+echo "*** End /etc/fstab"
 
-cat /etc/fstab > $LFS_LOG_FILE-fstab.log
 
 echo "*** --> ./lfs-8.3.1-chroot.sh"
 echo ""

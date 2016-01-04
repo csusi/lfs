@@ -16,9 +16,8 @@ LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
-### TODO: Some kind of check that user is in chrooted to $LFS_MOUNT_DIR
 check_user root
-
+check_chroot_to_lfs_rootdir 
 
 ########## Begin LFS Chapter Content ##########
 echo ""
@@ -32,8 +31,11 @@ export LANG=$LFS_LANG
 EOF
 
 ########## Chapter Clean-Up ##########
+echo ""
+echo "*** Start /etc/profile "
+cat /etc/profile | tee $LFS_LOG_FILE-profile.log
+echo "*** End /etc/profile "
 
-cat /etc/profile > $LFS_LOG_FILE-profile.log
 
 ### Not showing logs or capturing file list.  I'm adding one file.  
 echo ""

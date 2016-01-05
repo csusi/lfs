@@ -4,7 +4,7 @@ echo "### 6.25. Shadow-4.2.1 (0.2 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 echo ""
 
-### TODO: I Would like to reade more about this 
+### TODO: I Would like to read more about this 
 
 if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
@@ -65,8 +65,10 @@ time {
 	
 	grpconv
 	
-	### TODO: Can I pass in a default password set in global variables?  
+	### Different from the book, chpasswd used for bach passwd changes
 	### passwd root 
+	echo "root:$LFS_ROOT_PASSWORD" | chpasswd
+
 }
 
 ########## Chapter Clean-Up ##########

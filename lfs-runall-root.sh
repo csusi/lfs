@@ -46,7 +46,7 @@ echo "*** --> ./lfs-6.4-root.sh"
 
 		### ?????
 		echo "*** --> ./lfs-6.7-to-6.35-chroot.sh"
-		echo "*** --> passwd root"
+		echo "*** --> passwd root"  # Now done in base scripts, YAY!
 		echo "*** --> ./lfs-6.36-chroot.sh"
 		
 			### ????

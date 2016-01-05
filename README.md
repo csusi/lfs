@@ -23,6 +23,7 @@ Instructions:
  ~~--> git checkout -b rb7.8 origin/rb7.8~~  
 0. Review and update the file 'lfs-include.sh'. Some changes may be required for local needs. Especially...
 
+    LFS_ROOT_PASSWORD - Set as 'lfs', var to set root pass LFS instance
     $LFS_TIME_ZONE - sets the time zone for new LFS OS  
     $PAGE - Sets default page size for printing based on country standard  
     Local Networking Settings for Ch. 7.5   

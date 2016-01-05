@@ -32,10 +32,6 @@ LFS_PAGE=letter
 LFS_TOOLS_BACKUP_DIR=/root/lfs-backup/tools
 
 ### Used in 6.25 to set the password for root on the new system
-### TODO: I tried to automate this, but 'passwd' wasn't giving me any love
-### to pipe in a password.  So just leaving it to require user input when the
-### time comes. Also makes for a nice point to do a logical 
-### break in the batched build of ch. 6
 LFS_ROOT_PASSWORD=lfs
 
 ### Used in 7.5 for general networking configuration

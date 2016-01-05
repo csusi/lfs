@@ -30,8 +30,7 @@ time {
 echo "Chapter Ch. 6.7 to 6.35 finished on $(date -u)" >> /build-logs/0-milestones.log
 
 echo "########################## End Chapter 6.7 to 6.35 ##########################"
-echo "*** If builds are OK, set the root password (from 6.25), and run Ch 6.36:"
-echo "*** --> passwd root"
+echo "*** If builds are OK, run Ch 6.36:"
 echo "*** --> ./lfs-6.36-chroot.sh"
 echo ""
 

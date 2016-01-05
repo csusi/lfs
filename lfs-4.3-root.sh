@@ -18,6 +18,7 @@ groupadd lfs
 useradd -s /bin/bash -g lfs -m -k /dev/null lfs
 
 ### Screw a password.  This is a local VM.  
+### TODO: Maybe want to make this as a variable?
 # passwd lfs
 
 echo "*** Changing ownership of tools, sources, and build-logs directories."

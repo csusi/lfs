@@ -3,14 +3,15 @@ echo ""
 echo "### Run All"
 echo "### ========================================================================="
 
-### Bash does not exist in /bin/bash yet, not until symlink below.  So script
-### Interpreter above (#!/tools/bin/bash) is in a non-standard location
+### An attempt to automate the complete process.  Run after Ch 0 system check
 
 if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
 source ./lfs-include.sh
 
-### An attempt to automate the complete process... after Ch 0
+# Check for 1 variable.  It should be name of file that exists in /lfs/kernelconfigs
+
+
 
 ### Run this  --> ./lfs-2.3-to-4.3-root.sh"
 ### Has user quck input to confirm formatting $LFS_ROOT_PARTITION
@@ -81,6 +82,7 @@ echo "*** --> ./lfs-6.4-root.sh"
 	### Script ends, ending need for --> logout"
 	
 echo "--> update-grub"
+### Echo user to hitany key to reboot
 echo "--> ./lfs-9.3-reboot.sh"
 
 ### BAM, DONE!  

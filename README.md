@@ -23,7 +23,7 @@ Instructions:
  ~~--> git checkout -b rb7.8 origin/rb7.8~~  
 0. Review and update the file 'lfs-include.sh'. Some changes may be required for local needs. Especially...
 
-    LFS_ROOT_PASSWORD - Set as 'lfs', var to set root pass LFS instance
+    $LFS_ROOT_PASSWORD - Set as 'lfs', will root password on the LFS build  
     $LFS_TIME_ZONE - sets the time zone for new LFS OS  
     $PAGE - Sets default page size for printing based on country standard  
     Local Networking Settings for Ch. 7.5   
@@ -64,12 +64,12 @@ Returning after rebooting Host OS
 If shutting down the Host OS, perform the following steps on rebooting.
 
     After Chapter 5 is complete:
-        --> sudo -i
+        --> su -
         --> cd /root/lfs
         --> ./lfs-remount-root.sh
         
     After Chapter 6 is complete (or to chroot to LFS when system is complete):
-        --> sudo -i
+        --> su -
         --> cd /root/lfs
         --> ./lfs-remount-root.sh
         --> ./lfs-chroot-root.sh 
@@ -163,9 +163,8 @@ Tested Host OS
         sudo apt-get install -y texinfo    # Installes makeinfo requirement  
         sudo apt-get update  
         sudo apt-get upgrade  
-        Install a text editor you really like:   
-            sudo apt-get install geany -y  
-        Allow your GUI login to access & update contents of /root (where script files will be)  
+        Install a text editor you prefer, like: sudo apt-get install geany -y  
+        Allow your GUI login to access & update contents of /root (where script files will be.  This is optional, makes it easier to edit files if needed)  
             sudo usermod -a -G root <<GUI Login>>  
             sudo chmod -R 770 /root       
         Optional: Install a graphical partition editor: sudo apt-get install gparted -y    

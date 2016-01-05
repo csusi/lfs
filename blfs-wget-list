@@ -1,5 +1,4 @@
 # Req=Required, Rec=Recommended, Opt=Optional
-# Add Tcl, Expect, and DejaGNU
 
 # 9.4.2 openssl - Req for Cert Auth; Rec cURL; Opt Nettle
 # http://linuxfromscratch.org/blfs/view/stable/postlfs/openssl.html
@@ -112,3 +111,21 @@ https://fedorahosted.org/releases/x/m/xmlto/xmlto-0.0.26.tar.bz2
 # http://linuxfromscratch.org/blfs/view/stable/general/git.html
 MD5=git-2.5.0.tar.xz=f108b475a0aa30e9587be4295ab0bb09  
 https://www.kernel.org/pub/software/scm/git/git-2.5.0.tar.xz
+
+## Not missing above, leaving space for other items for git 
+## so will not have to renumber and rename files later
+
+# 9.4.30 tcl - Req for Expect
+# http://www.linuxfromscratch.org/blfs/view/stable/general/tcl.html
+MD5=tcl8.6.4-src.tar.gz=d7cbb91f1ded1919370a30edd1534304
+http://downloads.sourceforge.net/tcl/tcl8.6.4-src.tar.gz
+
+# 9.4.31 Expect - DejaGNU
+# http://www.linuxfromscratch.org/blfs/view/stable/general/expect.html
+MD5=expect5.45.tar.gz=44e1a4f4c877e9ddc5a542dfa7ecc92b
+http://prdownloads.sourceforge.net/expect/expect5.45.tar.gz
+
+# 9.4.32 DejaGNU - 
+# http://www.linuxfromscratch.org/blfs/view/stable/general/dejagnu.html
+MD5=dejagnu-1.5.3.tar.gz=5bda2cdb1af51a80aecce58d6e42bd2f
+https://ftp.gnu.org/pub/gnu/dejagnu/dejagnu-1.5.3.tar.gz

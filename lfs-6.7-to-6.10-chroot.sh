@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### Linux From Scratch Ch 6.7 to 6.10"
+echo "### Linux From Scratch Ch 6.7 to 6.10 (chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
 if [ ! -f ./lfs-include.sh ];then

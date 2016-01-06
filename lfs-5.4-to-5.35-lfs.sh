@@ -3,10 +3,6 @@ echo ""
 echo '### Linux From Scratch Ch. 5.4 to 5.35 (run as lfs) ###'
 echo "### ======================================================="
 
-### TODO: Probably could add some better error checking here.  This assumes
-### have gone through each script individually for an environment first and
-### want to just chain several together in a subsequent installation.
-
 if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
 source ./lfs-include.sh

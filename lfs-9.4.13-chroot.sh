@@ -51,8 +51,7 @@ time {
                     }" \
     -i valid.c
 	
-	### TODO: The book has additional commandline switches to add but am not installking gtk doc now
-	### TODO: Setting --without-trust-paths   Come back to this to see why you need it
+
 	echo "*** Running Configure ... $BLFS_SOURCE_FTP_FILE"
 	./configure --prefix=/usr --disable-static --with-history		&> $LFS_LOG_FILE-configure.log
 	

@@ -43,7 +43,6 @@ time {
 	  &> $LFS_LOG_FILE-make.log
 	
 	### TODO make a wrapper to test this?  Read small bit in book about roundoffs?
-	### TODO Also, now's a good time to bring up that you searche for 'fail' too.
 	echo "quit" | ./bc/bc -l Test/checklib.b \
 	  &> $LFS_LOG_FILE-make.log
 	

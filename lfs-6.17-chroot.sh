@@ -182,11 +182,7 @@ else
 	  echo "*** $LFS_ERROR_COUNT Errors Found In Build Logs for ... $LFS_SOURCE_FILE_NAME"
 fi
 
-
-### Not in the book. Capturing directory list to see how enviornment changes with each chapter.
-### TODO: Really want to change this to exclude /sources and /tools directories
-#ls / -alRh &> /build-logs/$LFS_SECTION-ls.log 
-
+capture_file_list "" 
 
 echo
 echo "### Error Count: $LFS_ERROR_COUNT     Warning Count: $LFS_WARNING_COUNT"

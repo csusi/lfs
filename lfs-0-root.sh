@@ -3,10 +3,6 @@ echo ""
 echo "### 0 Host System Requirements Check (0.0 SBU - running as 'root')"
 echo "### ==================================================="
 
-### TODO on future LFS version, be very careful to check no new commands are 
-### added or that version numbers in commands are not different, like
-### the perl lib files being moved  to 5.20.2 and not 5.20.0!!
-
 if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
 source ./lfs-include.sh

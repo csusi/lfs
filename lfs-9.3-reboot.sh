@@ -3,8 +3,6 @@ echo ""
 echo "### 9.3 Unmount and Reboot (0.0 SBU - 'root')"
 echo "### ====================================================="
 
-### TODO: Add check running as whoami and not chrooted
-
 if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
 source ./lfs-include.sh

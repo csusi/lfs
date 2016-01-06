@@ -4,7 +4,7 @@ echo "### 6.10. Adjusting the Toolchain (0.0 SBU - chrooted to lfs partition as 
 echo "### ========================================================================="
 
 ### TODO: Clean this up a bit!!  Add output to log files?
-### TODO: I think this can only be run once or risk losing content in those
+### I think this can only be run once or risk losing content in those
 ### mv commands.  Proceed with caution.
 
 if [ ! -f ./lfs-include.sh ];then

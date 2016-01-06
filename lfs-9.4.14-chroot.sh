@@ -45,8 +45,7 @@ echo "### ====================================================================="
 	#echo "*** Running Pre-Configuration Tasks ... $BLFS_SOURCE_FTP_FILE"
 	#### None
 	
-	#### TODO: The book has additional commandline switches to add but am not installking gtk doc now
-	#### TODO: Setting --without-trust-paths   Come back to this to see why you need it
+
 	#echo "*** Running Configure ... $BLFS_SOURCE_FTP_FILE"
 	#./configure --prefix=/usr --sysconfdir=/etc --without-trust-paths		&> $LFS_LOG_FILE-configure.log
 	

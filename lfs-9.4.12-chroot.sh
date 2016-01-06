@@ -45,8 +45,7 @@ time {
 	patch -Np1 -i ../sgml-common-0.6.3-manpage-1.patch  &> $LFS_LOG_FILE-patch.log
 	autoreconf -f -i									&> $LFS_LOG_FILE-autoconf.log
 	
-	### TODO: The book has additional commandline switches to add but am not installking gtk doc now
-	### TODO: Setting --without-trust-paths   Come back to this to see why you need it
+
 	echo "*** Running Configure ... $BLFS_SOURCE_FTP_FILE"
 	./configure --prefix=/usr --sysconfdir=/etc		&> $LFS_LOG_FILE-configure.log
 	

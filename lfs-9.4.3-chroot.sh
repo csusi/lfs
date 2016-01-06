@@ -1,8 +1,10 @@
 #!/bin/bash
 echo ""
-echo "### 9.4.2 (BLFS) OpenSSL-1.0.2 (1.3 SBU)"
+echo "### (BLFS) Certificate Authority Certificates (0.1  SBU)"
 echo "### ================================================"
-echo "*** BLFS Stable URL:  http://www.linuxfromscratch.org/blfs/view/stable/postlfs/openssl.html"
+
+### http://linuxfromscratch.org/blfs/view/stable/postlfs/cacerts.html
+
 
 #if [ ! -f ./lfs-include.sh ];then
     #echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi

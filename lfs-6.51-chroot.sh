@@ -3,9 +3,6 @@ echo ""
 echo "### 6.51. Gperf-3.0.4 (0.1 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
-### TODO: This failed, but after fiddling around and trying to compile it by hand
-###  the file is in /usr/bi/gperf.  so...?????
-
 if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
 source ./lfs-include.sh

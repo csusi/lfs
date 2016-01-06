@@ -52,8 +52,7 @@ time {
 	echo "*** Running Make ... $BLFS_SOURCE_FTP_FILE"
 	make $LFS_MAKE_FLAGS           			&> $LFS_LOG_FILE-make.log
 	
-	### TODO make html
-	### TODO make man
+	### TODO make html & make man
 	
 	echo "*** Running Make Test ... $BLFS_SOURCE_FTP_FILE"
 	make $LFS_MAKE_FLAGS test     			&> $LFS_LOG_FILE-make-test.log

@@ -36,7 +36,6 @@ time {
 	
 	sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
 	
-	### TODO document this a little better
 	make -f Makefile-libbz2_so \
 	  &> $LFS_LOG_FILE-make-makefile-libbz2.log
 	make clean \

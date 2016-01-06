@@ -16,7 +16,6 @@ echo "Chapter Ch. 6.7 to 6.35 started on $(date -u)" >> /build-logs/0-milestones
 time {
 
 	echo ""
-	### TODO: Add in something to check the return codes for a fatal error.  If so, exit this script also.  
 	for i in {7..35}
 	do
 		./lfs-6.$i-chroot.sh
@@ -34,4 +33,4 @@ echo "*** If builds are OK, run Ch 6.36:"
 echo "*** --> ./lfs-6.36-chroot.sh"
 echo ""
 
-### TODO: Add grep command for all logs for errors at bottom of these.
+

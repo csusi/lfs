@@ -75,7 +75,7 @@ cd /sources
 rm -rf $LFS_BUILD_DIRECTORY
 
 echo "BLFS $LFS_SOURCE_FILE_PREFIX finished on $(date -u)" >> /build-logs/0-milestones.log
-echo ""  >> /build-logs/0-milestones.log
+
 
 ### TODO: Would like to do this for the other installations in another pass.
 echo "*** Looking for selected installed programs and libraries" &> $LFS_LOG_FILE-installedfilelist.log

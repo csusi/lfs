@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo '### (BLFS) Run 9.4.2 to End (chrooted to lfs partition as 'root')'
+echo '### BLFS Run 9.4.2 to End (chrooted to lfs partition as 'root')'
 echo "### ======================================================="
 echo 
 
@@ -12,7 +12,7 @@ echo "*** Validating the environment."
 check_user root
 check_chroot_to_lfs_rootdir
 
-echo "(BLFS) 9.4.2 to End started on $(date -u)" >> /build-logs/0-milestones.log
+echo "BLFS 9.4.2 to End started on $(date -u)" >> /build-logs/0-milestones.log
 
 time {
 	
@@ -40,7 +40,7 @@ time {
 	
 } 
 
-echo "(BLFS) 9.4.2 to End finished on $(date -u)" >> /build-logs/0-milestones.log
+echo "BLFS 9.4.2 to End finished on $(date -u)" >> /build-logs/0-milestones.log
 	
 echo ""
 echo "########################## End Chapter 9.4.2 to End ##########################"

@@ -1,3 +1,7 @@
+This isn't needed anymore, i extract md5 from lfs-wget-list  
+
+need to delete this
+
 5262bfa25b60ed9de9f28d5d52d77fc5  openssl-1.0.2e.tar.gz
 b40fa88dc32f37a182b6b42092ebb144  nettle-3.1.1.tar.gz
 454a7f80362f38bd2335b6e9d95f57a6  libtasn1-4.6.tar.gz

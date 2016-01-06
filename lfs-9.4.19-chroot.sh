@@ -78,7 +78,7 @@ cd /sources
 rm -rf $LFS_BUILD_DIRECTORY
 
 echo "BLFS $LFS_SOURCE_FILE_PREFIX finished on $(date -u)" >> /build-logs/0-milestones.log
-echo ""  >> /build-logs/0-milestones.log
+
 
 echo "*** Testing if program exists (It should)" 
 git  --version

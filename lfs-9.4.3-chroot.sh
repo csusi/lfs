@@ -10,8 +10,8 @@ if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
 source ./lfs-include.sh
 
-LFS_SECTION=9.4.11
-LFS_SOURCE_FILE_PREFIX=unzip
+LFS_SECTION=9.4.3
+LFS_SOURCE_FILE_PREFIX=certauth
 LFS_BUILD_DIRECTORY=    
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 echo "BLFS $LFS_SOURCE_FILE_PREFIX started on $(date -u)" >> /build-logs/0-milestones.log

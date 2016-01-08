@@ -12,7 +12,7 @@ check_user root
 
 ########## Begin LFS Chapter Content ##########
 
-### This is in the book, but commenting out because it is set in ./lfs-global-variables.sh
+### This is in the book, but commenting out because it is set using the lfs-include.sh file
 ### export LFS=/mnt/lfs
 
 ### Note: In prior versions of the book (7.6), this chapter set mount points which

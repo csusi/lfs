@@ -9,8 +9,6 @@ source ./lfs-include.sh
 echo "*** Validating the environment."
 check_user root
 
-########## Begin LFS Chapter Content ##########
-
 #### Not In Book: check if 'lfs' user exists.  If so, delete previous attempt.
 #### Note: Not deleting backup of sources.  Allow user to do that on their own.
 if id -u 'lfs' >/dev/null 2>&1; then

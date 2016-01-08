@@ -172,7 +172,7 @@ if [ $LFS_ERROR_COUNT -ne 0 ]; then
 	  echo ""
 	  echo "*** Note: A few unexpected failures cannot always be avoided. Be sure to compare with known"
 	  echo "*** good build at:"
-	  echo "***    http://www.linuxfromscratch.org/lfs/build-logs/7.8/"
+	  echo "***    http://www.linuxfromscratch.org/lfs/build-logs/"
 	  echo "***    http://gcc.gnu.org/ml/gcc-testresults/"
 	  echo "*** Past builds had errors on [check], [check-fixincludes], & [do-check]"
 	  echo "***"
@@ -204,6 +204,6 @@ fi
 
 ### Post-Note
 ### As the book states, it is likely there will be errors.  Compare it to the
-### known good build-logs that can be found here: htt://www.linuxfromscratch.org/lfs/build-logs
+### known good build-logs that can be found here: http://www.linuxfromscratch.org/lfs/build-logs/
 
 

@@ -1,5 +1,5 @@
-#!/bin/bash
-echo ""
+#!/bin/bash 
+echo "" 
 echo "### Configure LFS to build SystemD ###"
 echo "### ========================================================="
 
@@ -7,29 +7,29 @@ echo "### ========================================================="
 ### Appropriate systemd packages
 LFS_SYSTEMD_SOURCES_LIST=\"http://linuxfromscratch.org/lfs/downloads/7.8-systemd/wget-list\"
 LFS_SYSTEMD_SOURCES_MD5_SUMS=\"http://linuxfromscratch.org/lfs/downloads/7.8-systemd/md5sums\"
-sed -ri 's@(LFS_SOURCES_LIST=)[^=]*$@\1'"$LFS_SYSTEMD_SOURCES_LIST"'@' ..\lfs-include.sh
-sed -ri 's@(LFS_SOURCES_MD5_SUMS=)[^=]*$@\1'"$LFS_SYSTEMD_SOURCES_MD5_SUMS"'@' ..\lfs-include.sh
+sed -ri 's@(LFS_SOURCES_LIST=)[^=]*$@\1'"$LFS_SYSTEMD_SOURCES_LIST"'@' ../lfs-include.sh
+sed -ri 's@(LFS_SOURCES_MD5_SUMS=)[^=]*$@\1'"$LFS_SYSTEMD_SOURCES_MD5_SUMS"'@' ../lfs-include.sh
 
-### 6.6
+### 6.6  
 ### Additional entries in /etc/passwd
 ### Additional entries in /etc/group
-mv lfs-6.6-chroot.sh ../
+mv lfs-6.6-chroot.sh ..
 
-### 6.9 - Glibc
+### 6.9 - Glibc  
 ### Installs the systemd support files for nscd
 ### In /etc/nsswitch.conf, changes "hosts: files dns" to "hosts: files dns myhostname"
 ### Different way of making /etc/localtime file by running:
 ###   lfs: cp -v /usr/share/zoneinfo/$LFS_TIME_ZONE /etc/localtime 
 ###   lfsd: ln -sfv /usr/share/zoneinfo/<xxx> /etc/localtime
-mv lfs-6.9-chroot.sh ../ 
+mv lfs-6.9-chroot.sh ..
 
 			   
 ### 6.21 - Attr  & 6.22 - Acl
 ### Running 'configure' does not include the --bindir=/bin directive.  This is odd
 ### and it makes me think it's an over sight in the systemd instructions because
 ### it doesn't explain why.
-mv lfs-6.21-chroot.sh ../  
-mv lfs-6.22-chroot.sh ../  
+mv lfs-6.21-chroot.sh .. 
+mv lfs-6.22-chroot.sh .. 
 
 ### 6.25 - Shadow
 ### Different information about including cracklib.html 
@@ -44,10 +44,10 @@ mv lfs-6.22-chroot.sh ../
 ### "Some packages in BLFS and beyond expect the find program in /bin, so make sure it's placed there:"
 
 ### 6.63 - systemd (was sysklogd, depricated in systemd) 
-mv lfs-6.63-chroot.sh ../
+mv lfs-6.63-chroot.sh ..
 		
 ###	6.64 - d-bus (was sysvinit, depricated in systemd)
-mv lfs-6.64-chroot.sh ../
+mv lfs-6.64-chroot.sh ..
 		
 ###	6.65 - Util-linux (was tar, moved to 6.67)
 ### Tar: No changes necessary, can just rename file
@@ -86,5 +86,5 @@ mv ../lfs-6.73-chroot.sh ../lfs-6.72-chroot.sh
 ### 6.73 - Nothing Here
 
 ### 7.2 - General Network Configuration - Similar to LFS 7.5
-mv lfs-7.2-chroot.sh ../lfs-7.2-chroot.sh		
+mv lfs-7.2-chroot.sh ..		
 		

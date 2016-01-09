@@ -49,6 +49,7 @@ LFS_IP_HOSTNAME=lfs
 LFS_IP_FQDN=lfs.susiland.net
 
 ### Used in 7.7 to set LANG env variable in /etc/profile
+### and in the systemd version in the /etc/locale.conf file
 LFS_LANG=en_US.UTF-8
 
 ### Used in 9.1 to set /etc/lsb-release

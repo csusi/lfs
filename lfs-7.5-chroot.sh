@@ -55,7 +55,7 @@ echo "*** 7.5.4. Creating /etc/hosts File"
 cat > /etc/hosts << EOF
 # Begin /etc/hosts (network card version)
 127.0.0.1 localhost
-10.0.0.217 $LFS_IP_FQDN $LFS_IP_HOSTNAME
+$LFS_IP_ADDR $LFS_IP_FQDN $LFS_IP_HOSTNAME
 # End /etc/hosts (network card version)
 EOF
 

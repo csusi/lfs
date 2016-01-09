@@ -41,6 +41,7 @@ LFS_IP_GATEWAY=10.0.0.1
 LFS_IP_PREFIX=24
 LFS_IP_BROADCAST=10.0.255.255
 ### /etc/resolv.conf
+LFS_IP_DOMAINNAME=susiland.net
 LFS_IP_NAMESERVER1=10.0.0.1
 LFS_IP_NAMESERVER2=10.0.0.52
 ### /etc/hostname & /etc/hosts

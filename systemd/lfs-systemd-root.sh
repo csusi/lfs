@@ -7,8 +7,10 @@ echo "### ========================================================="
 ### Appropriate systemd packages
 LFS_SYSTEMD_SOURCES_LIST=\"http://linuxfromscratch.org/lfs/downloads/7.8-systemd/wget-list\"
 LFS_SYSTEMD_SOURCES_MD5_SUMS=\"http://linuxfromscratch.org/lfs/downloads/7.8-systemd/md5sums\"
+LFS_SYSTEMD_EXPECTED_COUNT=79
 sed -ri 's@(LFS_SOURCES_LIST=)[^=]*$@\1'"$LFS_SYSTEMD_SOURCES_LIST"'@' ../lfs-include.sh
 sed -ri 's@(LFS_SOURCES_MD5_SUMS=)[^=]*$@\1'"$LFS_SYSTEMD_SOURCES_MD5_SUMS"'@' ../lfs-include.sh
+sed -ri 's@(LFS_SOURCES_EXPECTED_COUNT=)[^=]*$@\1'"$LFS_SYSTEMD_EXPECTED_COUNT"'@' ../lfs-include.sh
 
 ### 6.6  
 ### Additional entries in /etc/passwd

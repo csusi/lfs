@@ -10,47 +10,42 @@ Removes Package - LFS-Bootscripts
 Removes Package - Sysklogd
 Removes Package - Udev-lfs Tarball
 
-Substantial changes in Ch 7 Configuration scripts
+See comments in lfs-systemd-root.sh for more detailed explanation of
+changes for each script.
 
-Remember to
+Instructions
+------------
 
-	Update batches for Ch 6 & 8
-	Update "next script" for some batches and files
+Before running ./lfs-0-root.sh, run:
+
+--> cd systemd ; ./lfs-systemd-root.sh
 
 
 
+Kernel Configuration 
+--------------------
 
-	7.3 - Device and Module Handling on an LFS System 
-		mv lfs-7.3-chroot.sh ../		
-		
-	7.4 - Creating Custom Symlinks to Devices  
-		mv lfs-7.4-chroot.sh ../		
-		
-	7.5 - Configuring the system clock 
-		mv lfs-7.5-chroot.sh ../		  
-		
-	7.6 - Configuring the Linux Console 
-		mv lfs-7.6-chroot.sh ../		  
+General setup  --->  
+  [*] open by fhandle syscalls [CONFIG_FHANDLE]  
+  [ ] Auditing support [CONFIG_AUDIT]  
+  [*] Control Group support [CONFIG_CGROUPS]  
+Processor type and features  --->  
+  [*] Enable seccomp to safely compute untrusted bytecode [CONFIG_SECCOMP]  
+Networking support  --->  
+  Networking options  --->  
+    <*> The IPv6 protocol [CONFIG_IPV6]  
+Device Drivers  --->  
+  Generic Driver Options  --->  
+    [ ] Support for uevent helper [CONFIG_UEVENT_HELPER]  
+    [*] Maintain a devtmpfs filesystem to mount at /dev [CONFIG_DEVTMPFS]  
+    [ ] Fallback user-helper invocation for firmware loading [CONFIG_FW_LOADER_USER_HELPER]  
+Firmware Drivers  --->  
+    [*] Export DMI identification via sysfs to userspace [CONFIG_DMIID]  
+File systems  --->  
+  [*] Inotify support for userspace [CONFIG_INOTIFY_USER]  
+  <*> Kernel automounter version 4 support (also supports v3) [CONFIG_AUTOFS4_FS]  
+  Pseudo filesystems  --->  
+    [*] Tmpfs POSIX Access Control Lists [CONFIG_TMPFS_POSIX_ACL]  
+    [*] Tmpfs extended attributes [CONFIG_TMPFS_XATTR]  
 			
-	7.7 - Configuring the System Locale 
-		mv lfs-7.7-chroot.sh ../		  
-		
-	7.8 - Creating the /etc/inputrc File - Similar to LFS 7.8
-		mv lfs-7.8-chroot.sh ../		  
-		
-	7.9 - Creating the /etc/shells File - Similar to LFS 7.9
-		mv lfs-7.9-chroot.sh ../		  
-		
-	7.10 - Systemd Usage and Configuration 
-		mv lfs-7.10-chroot.sh ../		  
-		
-	8.2 - Creating the /etc/fstab File
-		mv lfs-8.2-chroot.sh ../
-			
-	8.3 - Creating the /etc/fstab File
-		mv lfs-8.3.1-chroot.sh ../		
-		mv lfs-8.3.1-chroot.sh ../	
-			
-	9.1 - The End
-		Different naming conventions 
-		mv lfs-8.3.1-chroot.sh ../
+

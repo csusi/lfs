@@ -8,9 +8,16 @@ echo "### ========================================================="
 LFS_SYSTEMD_SOURCES_LIST=\"http://linuxfromscratch.org/lfs/downloads/7.8-systemd/wget-list\"
 LFS_SYSTEMD_SOURCES_MD5_SUMS=\"http://linuxfromscratch.org/lfs/downloads/7.8-systemd/md5sums\"
 LFS_SYSTEMD_EXPECTED_COUNT=79
+LFS_SYSTEMD_DISTRIB_DESCRIPTION="Linux From Scratch 7.8-systemd"
+LFS_SYSTEMD_DISTRIB_RELEASE="7.8-systemd"
+
 sed -ri 's@(LFS_SOURCES_LIST=)[^=]*$@\1'"$LFS_SYSTEMD_SOURCES_LIST"'@' ../lfs-include.sh
 sed -ri 's@(LFS_SOURCES_MD5_SUMS=)[^=]*$@\1'"$LFS_SYSTEMD_SOURCES_MD5_SUMS"'@' ../lfs-include.sh
 sed -ri 's@(LFS_SOURCES_EXPECTED_COUNT=)[^=]*$@\1'"$LFS_SYSTEMD_EXPECTED_COUNT"'@' ../lfs-include.sh
+
+sed -ri 's@(LFS_DISTRIB_DESCRIPTION=)[^=]*$@\1'"$LFS_SYSTEMD_DISTRIB_DESCRIPTION"'@' ../lfs-include.sh
+sed -ri 's@(LFS_DISTRIB_RELEASE=)[^=]*$@\1'"$LFS_SYSTEMD_DISTRIB_RELEASE"'@' ../lfs-include.sh
+
 
 ### 6.6  
 ### Additional entries in /etc/passwd
@@ -120,5 +127,24 @@ cp lfs-7.7-chroot.sh ..
 ### 7.10 - Systemd Usage and Configuration 
 cp lfs-7.10-chroot.sh ..
 
+### 8.2 - Creating the /etc/fstab File
+### fstab: Removes entries for proc, sysfs, devpts, tmpfs, devtmpfs
+cp lfs-8.2-chroot.sh ..
+
+			
+### 8.3 - Creating the /etc/fstab File
+### Kernel Configuration: 
+### 8.3.2: Just adds "-systemd" to name of kernel image
+###  From: cp -v arch/x86/boot/bzImage /boot/vmlinuz-4.2-lfs-7.8
+###    To: cp -v arch/x86/boot/bzImage /boot/vmlinuz-4.2-lfs-7.8-systemd
+cp lfs-8.3.2-chroot.sh ..
+
+### 9.1 - The End
+### (above) Changes the release name and description to reflect a systemd system
+### Adds new file /etc/os-release
+cp lfs-8.3.1-chroot.sh ../
+
+
 ### 7.2-to-8.2 - Adds 7.10 in there		
 cp lfs-7.2-to-8.2-chroot.sh ..
+

@@ -15,12 +15,12 @@ Before running ./lfs-0-root.sh, run:
 Differences
 -----------
 
-Adds Package - D-Bus
-Adds Package - Systemd
-Removes Package - Eudev
-Removes Package - LFS-Bootscripts
-Removes Package - Sysklogd
-Removes Package - Udev-lfs Tarball
+Adds Package - D-Bus  
+Adds Package - Systemd  
+Removes Package - Eudev  
+Removes Package - LFS-Bootscripts  
+Removes Package - Sysklogd  
+Removes Package - Udev-lfs Tarball  
 
 See comments in lfs-systemd-root.sh for more detailed explanation of
 changes for each script.

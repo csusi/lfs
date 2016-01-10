@@ -28,7 +28,7 @@ Instructions:
  ~~--> git checkout -b rb7.8 origin/rb7.8~~  
 0. Review and update the file 'lfs-include.sh'. Some changes may be required for local needs. Especially...
 
-    $LFS_ROOT_PASSWORD - Set as 'lfs', will root password on the LFS build  
+    $LFS_ROOT_PASSWORD - Set as 'lfs', sets the root password on the LFS build
     $LFS_TIME_ZONE - sets the time zone for new LFS OS  
     $PAGE - Sets default page size for printing based on country standard  
     Local Networking Settings for Ch. 7.5   
@@ -46,23 +46,23 @@ Instructions:
          
   --> ./lfs-0-root.sh
  
-The scripts lfs-8.3.1-root.sh & lfs-8.3.2-root.sh - The Kernel build is broken in two parts.  The reason for this is that the first half extracts the source files and runs 'make mrproper'.  The break is to create the .config file containing kernel compilation options, which is a necessary step prior to compiling the kernel.  The second script then performs the compile.
+The linux kernel build is broken in two parts (lfs-8.3.1-root.sh & lfs-8.3.2-root.sh).  The reason for this is that the first half extracts the source files and runs 'make mrproper'.  The break is to create the .config file containing kernel compilation options, which is a necessary step prior to compiling the kernel.  The second script then performs the compile abd copies the kernel image.
 
 Other
 -----
 
-Pay attention for chapters that require to stop and validate output when requested.  Check the logs (in /mnt/lfs/build-logs) for errors.  There are some harmless errors that occur, so check notes in book and script if they are critical. And, may god have mercy on your soul.
+Go through each chapter individually at first.  Pay attention for chapters that require to stop and validate output when requested.  If there are errors, check the logs (in /mnt/lfs/build-logs) for more details.  There are some harmless errors that occur, that I've tried to make note of in the scripts.  But also check notes in book if they are critical. And, may god have mercy on your soul.
 
 Scripts will write substantial output to /mnt/lfs/build-logs.  Start here when troubleshooting.
 
 While working in the bulk of chapter 5, the scripts are located at '/home/lfs/lfs' where  they are actually run by the 'lfs' user.  Similarly, in much of chapter 6, the chrooted 'root' user will be running the scripts from '$LFS_MOUNT_DIR/root/lfs'. Therefore, if any changes are made to the scripts located at '/root/lfs', they will need to be copied to the appropriate location for the 'lfs' or chrooted 'root' user in Ch 5 and 6.
 
-If a script determines that a source code directory already exists from extracted source tar, it will not re-extract the contents.  Likewise, at the end of the compilation the scripts will not delete a source directory it found earlier.  This is so the user can extract the source on their own, play around inside the source, and not have to worry about the scripts deleting their work.  Similarly, in 8.3.1 and 8.3.2, when the kernel is compiled, 8.3.1 will not overwrite and already extracted source, and 8.3.2 will never delete the source directory once it is created.    
+If a script determines that a source code directory already exists from extracted source tar, it will not re-extract the contents.  Likewise, at the end of the compilation the scripts will not delete a source directory it found earlier.  This is so the user can extract the source on their own, play around inside the source, and not have to worry about the scripts deleting their work.  Similarly, in 8.3.1 and 8.3.2, when the kernel is compiled, 8.3.1 will not overwrite an already extracted source, and 8.3.2 will never delete the source directory.  When you have a working build, it would be a good idea to copy the .config file from here, to save for later.
 
-Batch scripts are included to run build multiple chapters sequentially.  Use when familiar with, and comfortable chapters will compile correctly.
+Batch scripts are included to run build multiple chapters sequentially.  Use when familiar with, and comfortable units will compile correctly.
         
 The last script from the book is 'lfs-9.3-unmount-and-reboot.sh'.  The scripts labeled as 9.4.# will build BLFS packages to get the process started.  Once your LFS boots, read below to run this and begin the process by compiling some additional critical components while in the host system.
-   
+
 Returning after rebooting Host OS
 ---------------------------------
 

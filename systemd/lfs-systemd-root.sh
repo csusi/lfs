@@ -8,7 +8,7 @@ echo "### ========================================================="
 LFS_SYSTEMD_SOURCES_LIST=\"http://linuxfromscratch.org/lfs/downloads/7.8-systemd/wget-list\"
 LFS_SYSTEMD_SOURCES_MD5_SUMS=\"http://linuxfromscratch.org/lfs/downloads/7.8-systemd/md5sums\"
 LFS_SYSTEMD_EXPECTED_COUNT=79
-LFS_SYSTEMD_DISTRIB_DESCRIPTION="Linux From Scratch 7.8-systemd"
+LFS_SYSTEMD_DISTRIB_DESCRIPTION=\"Linux From Scratch 7.8-systemd\"
 LFS_SYSTEMD_DISTRIB_RELEASE="7.8-systemd"
 
 sed -ri 's@(LFS_SOURCES_LIST=)[^=]*$@\1'"$LFS_SYSTEMD_SOURCES_LIST"'@' ../lfs-include.sh

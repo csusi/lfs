@@ -9,7 +9,12 @@ The purpose of this project is to:
 0. Speed up the process a little
 0. Learn by doing and tinkering
 
-The scripts will build a working LFS system, and some initial BLFS packages.  
+These are posted up to github because it's a very convenient place to store & retrieve them. Please feel free to use them, and I would encourage feedback and updates.  However, if you are using them, I ***HIGHLY*** encourage you to try the book on its own first.  It has been a challenging and educationally rewarding experience doing this, and I learn more about how GNU/Linux works each time through.
+
+Status
+------
+
+The scripts build a working LFS system, and some initial BLFS packages.  There are a few things that were left out, like Grub configuration in 8.4.  But it is 99% complete.  
 
 Instructions:
 --------------

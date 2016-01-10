@@ -142,7 +142,7 @@ cp lfs-8.3.2-chroot.sh ..
 ### 9.1 - The End
 ### (above) Changes the release name and description to reflect a systemd system
 ### Adds new file /etc/os-release
-cp lfs-8.3.1-chroot.sh ../
+cp lfs-9.1-chroot.sh ..
 
 
 ### 7.2-to-8.2 - Adds 7.10 in there		

@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 5.9. Binutils-2.25.1 (1.1 SBU  - running as 'lfs')"
+echo "### 5.9. Binutils-2.26 (1.1 SBU  - running as 'lfs')"
 echo "### ================================================"
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.9
 LFS_SOURCE_FILE_PREFIX=binutils
-LFS_BUILD_DIRECTORY=binutils-build    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -28,46 +27,46 @@ cd $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
 time {
 	
 	echo "*** Runing Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
-	mkdir ../$LFS_BUILD_DIRECTORY
-	cd ../$LFS_BUILD_DIRECTORY
+	mkdir -v build
+	cd       build
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	CC=$LFS_TGT-gcc                \
 	AR=$LFS_TGT-ar                 \
 	RANLIB=$LFS_TGT-ranlib         \
-	../binutils-2.25.1/configure     \
-		--prefix=/tools            \
-		--disable-nls              \
-		--disable-werror           \
-		--with-lib-path=/tools/lib \
-		--with-sysroot 				\
-		&> $LFS_LOG_FILE-configure.log
+	../configure                   \
+    --prefix=/tools            \
+    --disable-nls              \
+    --disable-werror           \
+    --with-lib-path=/tools/lib \
+    --with-sysroot 				\
+		&> $LFS_LOG_FILE-1-configure.log
 		
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS    \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-3-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	make -C ld clean   \
-	  &> $LFS_LOG_FILE-make-ld-clean.log
+	  &> $LFS_LOG_FILE-4-make-ld-clean.log
 	  
 	make -C ld LIB_PATH=/usr/lib:/lib   \
-	  &> $LFS_LOG_FILE-make-ld-lib.log
+	  &> $LFS_LOG_FILE-5-make-ld-lib.log
 	  
 	cp -v ld/ld-new /tools/bin  \
-	  &> $LFS_LOG_FILE-post-make-copy.log
+	  &> $LFS_LOG_FILE-6-post-make-copy.log
 }
 
 ########## Chapter Clean-Up ##########
 	
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
+rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/build)
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 show_build_errors $LFS_MOUNT_DIR
 capture_file_list $LFS_MOUNT_DIR

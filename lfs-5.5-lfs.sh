@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 5.5. GCC-5.2.0 - Pass 1  (7.4 SBU - running as 'lfs') ###"
+echo "### 5.5. GCC-5.3.0  - Pass 1  (7.4 SBU - running as 'lfs') ###"
 echo "### ========================================================="
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,9 +9,8 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.5
 LFS_SOURCE_FILE_PREFIX=gcc
-LFS_BUILD_DIRECTORY=gcc-build    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
-echo "Chapter $LFS_SECTION $LFS_SOURCE_FILE_PREFIX - Started on $(date -u)" >> /build-logs/0-milestones.log
+echo "Chapter $LFS_SECTION $LFS_SOURCE_FILE_PREFIX - Started on $(date -u)" >> $LFS_MOUNT_DIR/build-logs/0-milestones.log
 
 echo "*** Validating the environment."
 check_user lfs
@@ -30,11 +29,11 @@ time {
 
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 	tar -xf ../mpfr-3.1.3.tar.xz
-	mv -v mpfr-3.1.3 mpfr					&> $LFS_LOG_FILE-mv-mpfr.log
-	tar -xf ../gmp-6.0.0a.tar.xz
-	mv -v gmp-6.0.0 gmp						&> $LFS_LOG_FILE-mv-gmp.log
+	mv -v mpfr-3.1.3 mpfr					&> $LFS_LOG_FILE-1-mv-mpfr.log
+	tar -xf ../gmp-6.1.0.tar.xz
+	mv -v gmp-6.1.0 gmp						&> $LFS_LOG_FILE-2-mv-gmp.log
 	tar -xf ../mpc-1.0.3.tar.gz
-	mv -v mpc-1.0.3 mpc						&> $LFS_LOG_FILE-mv-mpc.log
+	mv -v mpc-1.0.3 mpc						&> $LFS_LOG_FILE-3-mv-mpc.log
 	
 	# change the location of GCC's default dynamic linker to use the one installed in /tools
 	for file in \
@@ -42,7 +41,7 @@ time {
 	do
 	  cp -uv $file{,.orig}
 	  sed -e 's@/lib\(64\)\?\(32\)\?/ld@/tools&@g' \
-	      -e 's@/usr@/tools@g' $file.orig > $file
+		  -e 's@/usr@/tools@g' $file.orig > $file
 	  echo '
 #undef STANDARD_STARTFILE_PREFIX_1
 #undef STANDARD_STARTFILE_PREFIX_2
@@ -51,17 +50,16 @@ time {
 	  touch $file.orig
 	done
 	
-	sed -i '/k prot/agcc_cv_libc_provides_ssp=yes' gcc/configure
 	
-	mkdir ../$LFS_BUILD_DIRECTORY
-	cd ../$LFS_BUILD_DIRECTORY
+	mkdir -v build
+	cd build
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	../gcc-5.2.0/configure                             \
+	../configure                                       \
     --target=$LFS_TGT                              \
     --prefix=/tools                                \
     --with-glibc-version=2.11                      \
-    --with-sysroot=$LFS                            \
+    --with-sysroot=$LFS_MOUNT_DIR                  \
     --with-newlib                                  \
     --without-headers                              \
     --with-local-prefix=/tools                     \
@@ -77,16 +75,16 @@ time {
     --disable-libssp                               \
     --disable-libvtv                               \
     --disable-libstdcxx                            \
-    --enable-languages=c,c++                       \
-		&> $LFS_LOG_FILE-configure.log
+    --enable-languages=c,c++   \
+		&> $LFS_LOG_FILE-4-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-5-make.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-6-make-install.log
 }
 
 ########## Chapter Clean-Up ##########
@@ -94,13 +92,14 @@ time {
 echo ""
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
+rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/build)
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
+
 
 echo "Chapter $LFS_SECTION $LFS_SOURCE_FILE_PREFIX - Finished on $(date -u)" >> /build-logs/0-milestones.log
 
 echo ""
-echo "*** v7.8 Note: If there is an error for no include path for stdc-predef.h, it is probably harmless."
+echo "*** v7.9 Note: If there is an error for no include path for stdc-predef.h, it is probably harmless."
 show_build_errors $LFS_MOUNT_DIR
 capture_file_list $LFS_MOUNT_DIR
 chapter_footer

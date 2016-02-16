@@ -12,7 +12,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.36
 LFS_SOURCE_FILE_PREFIX=bash
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -33,32 +32,31 @@ time {
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 	
 	patch -Np1 -i ../bash-4.3.30-upstream_fixes-2.patch \
-	  &> $LFS_LOG_FILE-patch.log
+	  &> $LFS_LOG_FILE-1-patch.log
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	./configure --prefix=/usr                       \
-            --bindir=/bin                       \
-            --docdir=/usr/share/doc/bash-4.3.30 \
+	        --docdir=/usr/share/doc/bash-4.3.30 \
             --without-bash-malloc               \
             --with-installed-readline        \
-	  &> $LFS_LOG_FILE-configure.log
+	  &> $LFS_LOG_FILE-2-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS         \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-3-make.log
 	
 	echo "*** Running Make Tests ... $LFS_SOURCE_FILE_NAME"  \
-	 2>&1 | tee $LFS_LOG_FILE-make-tests.log
+	 2>&1 | tee $LFS_LOG_FILE-4-make-tests.log
 	
 	chown -Rv nobody .           \
-		&>> $LFS_LOG_FILE-make-tests.log
+		&>> $LFS_LOG_FILE-5-make-tests.log
 		
 	su nobody -s /bin/bash -c "PATH=$PATH make tests"  \
-		&>> $LFS_LOG_FILE-make-tests.log
+		&>> $LFS_LOG_FILE-6-make-tests.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-7-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	### Running 'exec /bin/bash --login +h' below

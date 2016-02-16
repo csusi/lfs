@@ -13,7 +13,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.11
 LFS_SOURCE_FILE_PREFIX=tcl
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -37,29 +36,29 @@ time {
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	cd unix
 	./configure --prefix=/tools \
-		&> $LFS_LOG_FILE-configure.log
+		&> $LFS_LOG_FILE-1-configure.log
 		
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 		
 	echo "*** Running Make Test ... $LFS_SOURCE_FILE_NAME"
 	TZ=UTC make test $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-test.log
+	  &> $LFS_LOG_FILE-3-make-test.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS    \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-4-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	chmod -v u+w /tools/lib/libtcl8.6.so \
-	  &> $LFS_LOG_FILE-postmake-chmod.log
+	  &> $LFS_LOG_FILE-5-postmake-chmod.log
 	  
 	make install-private-headers \
-	  &> $LFS_LOG_FILE-postmake-make-install-private-headers.log
+	  &> $LFS_LOG_FILE-6-postmake-make-install-private-headers.log
 	  
 	ln -sv tclsh8.6 /tools/bin/tclsh \
-	  &> $LFS_LOG_FILE-postmake-symlink.log
+	  &> $LFS_LOG_FILE-7-postmake-symlink.log
 	
 }
 
@@ -68,7 +67,6 @@ time {
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 
 show_build_errors $LFS_MOUNT_DIR

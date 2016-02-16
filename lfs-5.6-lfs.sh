@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 5.6. Linux-4.2 API Headers (0.1 SBU - running as 'lfs') ###"
+echo "### 5.6. Linux-4.4.1 API Headers (0.1 SBU - running as 'lfs') ###"
 echo "### ============================================================"
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.6
 LFS_SOURCE_FILE_PREFIX=linux
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -34,15 +33,15 @@ time {
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make mrproper $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-mrproper.log
+	  &> $LFS_LOG_FILE-1-make-mrproper.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make INSTALL_HDR_PATH=dest headers_install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-2-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	cp -rv dest/include/* /tools/include \
-	  &> $LFS_LOG_FILE-cp-devinclude.log
+	  &> $LFS_LOG_FILE-3-cp-devinclude.log
 }
 
 ########## Chapter Clean-Up ##########
@@ -51,7 +50,6 @@ echo ""
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 show_build_errors $LFS_MOUNT_DIR
 capture_file_list $LFS_MOUNT_DIR

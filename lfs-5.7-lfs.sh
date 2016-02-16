@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo '### 5.7. Glibc-2.22 (4.5 SBU)'
+echo '### 5.7. Glibc-2.22  (4.0 SBU)'
 echo '### ================================================'
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.7
 LFS_SOURCE_FILE_PREFIX=glibc
-LFS_BUILD_DIRECTORY=glibc-build    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -28,24 +27,24 @@ cd $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
 time {
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 	### Test to see if RPC headers are on host system and install if they are not
-	patch -Np1 -i ../glibc-2.22-upstream_i386_fix-1.patch &> $LFS_LOG_FILE-patch.log
+	patch -Np1 -i ../glibc-2.22-upstream_i386_fix-1.patch &> $LFS_LOG_FILE-1-patch.log
 	
-	mkdir ../$LFS_BUILD_DIRECTORY
-	cd ../$LFS_BUILD_DIRECTORY
+	mkdir -v build
+	cd       build
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	../glibc-2.22/configure                             \
-      --prefix=/tools                               \
-      --host=$LFS_TGT                               \
-      --build=$(../glibc-2.22/scripts/config.guess) \
-      --disable-profile                             \
-      --enable-kernel=2.6.32                        \
-      --enable-obsolete-rpc                         \
-      --with-headers=/tools/include                 \
-      libc_cv_forced_unwind=yes                     \
-      libc_cv_ctors_header=yes                      \
-      libc_cv_c_cleanup=yes                         \
-		&> $LFS_LOG_FILE-configure.log
+	../configure                             \
+      --prefix=/tools                    \
+      --host=$LFS_TGT                    \
+      --build=$(../scripts/config.guess) \
+      --disable-profile                  \
+      --enable-kernel=2.6.32             \
+      --enable-obsolete-rpc              \
+      --with-headers=/tools/include      \
+      libc_cv_forced_unwind=yes          \
+      libc_cv_ctors_header=yes           \
+      libc_cv_c_cleanup=yes \
+		&> $LFS_LOG_FILE-2-configure.log
 		
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
@@ -64,8 +63,8 @@ time {
 echo ""
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
+rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/build)
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 echo ""
 echo "*** Note: May include 'error' entries that are actually part of an echo statement"

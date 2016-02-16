@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 5.4. Binutils-2.25.1 - Pass 1 (1 SBU - running as 'lfs')"
+echo "### 5.4. Binutils-2.26 - Pass 1 (1 SBU - running as 'lfs')"
 echo "### ======================================================"
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.4
 LFS_SOURCE_FILE_PREFIX=binutils
-LFS_BUILD_DIRECTORY=binutils-build    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -28,22 +27,21 @@ cd $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
 time {
 
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
-	mkdir ../$LFS_BUILD_DIRECTORY
-	cd ../$LFS_BUILD_DIRECTORY
+	mkdir -v build
+	cd build
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	../binutils-2.25.1/configure     \
-    --prefix=/tools            \
-    --with-sysroot=$LFS        \
-    --with-lib-path=/tools/lib \
-    --target=$LFS_TGT          \
-    --disable-nls              \
-    --disable-werror           \
-		&> $LFS_LOG_FILE-configure.log
+	../configure --prefix=/tools            \
+             --with-sysroot=$LFS_MOUNT_DIR        \
+             --with-lib-path=/tools/lib \
+             --target=$LFS_TGT          \
+             --disable-nls              \
+             --disable-werror\
+		&> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	# Performing build on 86_64 install
 	case $(uname -m) in
@@ -52,7 +50,7 @@ time {
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-3-make-install.log
 
 }
 
@@ -61,8 +59,13 @@ time {
 echo ""
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
+rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/build)
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
+
+### TODO: Apparently, keeping the source around between builds is bad practice and the book explicitly says to delete
+### the source directory after each compilation.  On some packages, this works fine and I have not been affected by it
+### but on others, it will cause a problem.  In later versions, remove this and start creating patches instead to keep
+### any changes I may make to source packages.
 
 show_build_errors $LFS_MOUNT_DIR
 capture_file_list $LFS_MOUNT_DIR

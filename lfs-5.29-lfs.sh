@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 5.29. Perl-5.22.0  (1.4 SBU - running as 'lfs')"
+echo "### 5.29. Perl-5.22.1  (1.3 SBU - running as 'lfs')"
 echo "### ================================================"
 
 if [ ! -f ./lfs-include.sh ];then
@@ -31,11 +31,11 @@ time {
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	sh Configure -des -Dprefix=/tools -Dlibs=-lm \
-	  &> $LFS_LOG_FILE-configure.log
+	  &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	### None
@@ -46,13 +46,13 @@ time {
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	
 	cp -v perl cpan/podlators/pod2man /tools/bin
-	  &> $LFS_LOG_FILE-postmake-copy-podlators.log
+	  &> $LFS_LOG_FILE-3-postmake-copy-podlators.log
 	
-	mkdir -pv /tools/lib/perl5/5.22.0 \
-	  &> $LFS_LOG_FILE-postmake-mkdir-5.20.log
+	mkdir -pv /tools/lib/perl5/5.22.1 \
+	  &> $LFS_LOG_FILE-4-postmake-mkdir-5.21.log
 	  
-	cp -Rv lib/* /tools/lib/perl5/5.22.0 \
-	  &> $LFS_LOG_FILE-postmake-copy-lib.log
+	cp -Rv lib/* /tools/lib/perl5/5.22.1 \
+	  &> $LFS_LOG_FILE-5-postmake-copy-lib.log
 }
 
 ########## Chapter Clean-Up ##########

@@ -19,6 +19,9 @@ cat > ~/.bash_profile << "EOF"
 exec env -i HOME=$HOME TERM=$TERM PS1='\u:\w\$ ' /bin/bash
 EOF
 
+### TODO: There may be an error here, whee LFS is being hardcoded as /mnt/lfs and if the lfs-include.sh variable LFS_MOUNT_DIR differs, this could become an issue.
+### But I am changing the config statement in lfs-5.4-lfs to use LFS_MOUNT_DIR instead, so the LFS variable may not be used elsewhere.  
+
 cat > ~/.bashrc << "EOF"
 set +h
 umask 022

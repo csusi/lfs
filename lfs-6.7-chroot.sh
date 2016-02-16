@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 6.7. Linux-4.2 API Headers (0.1 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.7. Linux-4.4.1 API Headers (0.1 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.7
 LFS_SOURCE_FILE_PREFIX=linux
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -39,18 +38,18 @@ time {
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make mrproper $LFS_MAKE_FLAGS 											\
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-1-make.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make INSTALL_HDR_PATH=dest headers_install $LFS_MAKE_FLAGS 				\
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-2-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	find dest/include \( -name .install -o -name ..install.cmd \) -delete 	\
-	  &> $LFS_LOG_FILE-find.log
+	  &> $LFS_LOG_FILE-3-find.log
 	  
 	cp -rv dest/include/* /usr/include 										\
-	  &> $LFS_LOG_FILE-cp.log
+	  &> $LFS_LOG_FILE-4-cp.log
 
 } 
 
@@ -59,8 +58,8 @@ time {
 echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
+rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/build)
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 echo ""
 show_build_errors ""

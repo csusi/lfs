@@ -1,8 +1,8 @@
 #!/bin/bash
 echo ""
-echo "### 6.17. GCC-5.2.0   (82 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.17. GCC-5.3.0   (76 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
-echo "### 82 SBU!! Time for a lunch/dinner/smoke/sleep break!!"
+echo "### 76 SBU!! Time for a lunch/dinner/smoke/sleep break!!"
 
 if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
@@ -10,7 +10,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.17
 LFS_SOURCE_FILE_PREFIX=gcc
-LFS_BUILD_DIRECTORY=gcc-build    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 echo "Chapter $LFS_SECTION $LFS_SOURCE_FILE_PREFIX - Started on $(date -u)" >> /build-logs/0-milestones.log
 
@@ -31,50 +30,49 @@ time {
 	
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 	
-	mkdir ../$LFS_BUILD_DIRECTORY
-	cd ../$LFS_BUILD_DIRECTORY
+	mkdir -v build
+	cd       build
 	
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	SED=sed                       \
-	../gcc-5.2.0/configure        \
-     --prefix=/usr            \
-     --enable-languages=c,c++ \
-     --disable-multilib       \
-     --disable-bootstrap      \
-     --with-system-zlib       \
-	  &> $LFS_LOG_FILE-configure.log
+	../configure --prefix=/usr            \
+             --enable-languages=c,c++ \
+             --disable-multilib       \
+             --disable-bootstrap      \
+             --with-system-zlib      \
+	  &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS   \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	
 	ulimit -s 32768
 	make -k check $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-check.log
+	  &> $LFS_LOG_FILE-3-make-check.log
 	
-	../gcc-4.9.2/contrib/test_summary  \
-	  &> $LFS_LOG_FILE-test-summary.log
+	../contrib/test_summary  \
+	  &> $LFS_LOG_FILE-4-test-summary.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-5-make-install.log
+
+	echo ""
+	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
+
+	ln -sv ../usr/bin/cpp /lib
+
+	ln -sv gcc /usr/bin/cc
+
+	install -v -dm755 /usr/lib/bfd-plugins
+	ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/5.3.0/liblto_plugin.so /usr/lib/bfd-plugins/
 
 }
 
 ########## Chapter Clean-Up ##########
-
-echo ""
-echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
-
-ln -sv ../usr/bin/cpp /lib
-
-ln -sv gcc /usr/bin/cc
-
-install -v -dm755 /usr/lib/bfd-plugins
-ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/5.2.0/liblto_plugin.so /usr/lib/bfd-plugins/
 
 echo
 echo "*** STOP AND LOOK IN BOOK THAT ALL THE OUTPUT IS CORRECT"
@@ -148,8 +146,8 @@ mv -v /usr/lib/*gdb.py /usr/share/gdb/auto-load/usr/lib
 echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
+rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/build)
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 echo "Chapter $LFS_SECTION $LFS_SOURCE_FILE_PREFIX - Finished on $(date -u)" >> /build-logs/0-milestones.log
 

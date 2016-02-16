@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 5.23. Gettext-0.19.5.1 (0.9 SBU - running as 'lfs')"
+echo "### 5.23. Gettext-0.19.7  (0.9 SBU - running as 'lfs')"
 echo "### ================================================"
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.23
 LFS_SOURCE_FILE_PREFIX=gettext
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -32,23 +31,23 @@ time {
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	EMACS="no" ./configure --prefix=/tools --disable-shared \
-	  &> $LFS_LOG_FILE-configure.log
+	  &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make -C gnulib-lib $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-gnulib-lib.log
+	  &> $LFS_LOG_FILE-2-make-gnulib-lib.log
 	
 	make -C intl pluralx.c \
-	  &> $LFS_LOG_FILE-make-pluralx.log
+	  &> $LFS_LOG_FILE-3-make-pluralx.log
 	  
 	make -C src msgfmt $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-src-msgfmt.log
+	  &> $LFS_LOG_FILE-4-make-src-msgfmt.log
 	  
 	make -C src msgmerge $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-src-msgmerge.log
+	  &> $LFS_LOG_FILE-5-make-src-msgmerge.log
 	  
 	make -C src xgettext $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-src-xgettext.log
+	  &> $LFS_LOG_FILE-6-make-src-xgettext.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	### None
@@ -66,7 +65,6 @@ echo ""
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 echo ""
 show_build_errors $LFS_MOUNT_DIR

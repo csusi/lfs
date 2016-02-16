@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 5.18. Coreutils-8.24 (0.7 SBU - running as 'lfs')"
+echo "### 5.18.  Coreutils-8.25 (0.6 SBU - running as 'lfs')"
 echo "### ================================================"
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.18
 LFS_SOURCE_FILE_PREFIX=coreutils
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -31,19 +30,19 @@ time {
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	./configure --prefix=/tools --enable-install-program=hostname \
-	  &> $LFS_LOG_FILE-configure.log
+	  &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	make RUN_EXPENSIVE_TESTS=yes check $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-check.log
+	  &> $LFS_LOG_FILE-3-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS  \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-4-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	### None
@@ -55,7 +54,6 @@ echo ""
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 echo ""
 echo "*** 7.8 NOTE:  This generates errors.  Looking in build-logs/5.18-coreutils-make-check.log "

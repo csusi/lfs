@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo '### 5.8. Libstdc++-5.2.0 (0.4 SBU)'
+echo '### 5.8. Libstdc++-5.3.0 (0.4 SBU)'
 echo '### ================================================'
 echo '### Libstdc files are part of the gcc package.'
 
@@ -10,7 +10,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.8
 LFS_SOURCE_FILE_PREFIX=gcc
-LFS_BUILD_DIRECTORY=gcc-build    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -33,27 +32,27 @@ time {
 	
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 	
-	mkdir ../$LFS_BUILD_DIRECTORY
-	cd ../$LFS_BUILD_DIRECTORY
+	mkdir -v build
+	cd       build
 
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	../gcc-5.2.0/libstdc++-v3/configure \
+	../libstdc++-v3/configure           \
     --host=$LFS_TGT                 \
     --prefix=/tools                 \
     --disable-multilib              \
     --disable-nls                   \
     --disable-libstdcxx-threads     \
     --disable-libstdcxx-pch         \
-    --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/5.2.0 \
-		&> $LFS_LOG_FILE-configure.log
+    --with-gxx-include-dir=/tools/$LFS_TGT/include/c++/5.3.0 \
+		&> $LFS_LOG_FILE-1-configure.log
 		
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-3-make-install.log
 
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	### None
@@ -64,8 +63,8 @@ time {
 
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
+rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/build)
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 show_build_errors $LFS_MOUNT_DIR
 capture_file_list $LFS_MOUNT_DIR

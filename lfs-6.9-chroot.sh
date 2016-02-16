@@ -13,7 +13,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.9
 LFS_SOURCE_FILE_PREFIX=glibc
-LFS_BUILD_DIRECTORY=glibc-build    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 echo "Chapter $LFS_SECTION $LFS_SOURCE_FILE_PREFIX - Started on $(date -u)" >> /build-logs/0-milestones.log
 
@@ -34,36 +33,34 @@ time {
 	
 echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 patch -Np1 -i ../glibc-2.22-fhs-1.patch \
-  &> $LFS_LOG_FILE-patch1.log
+  &> $LFS_LOG_FILE-1-patch1.log
   
 patch -Np1 -i ../glibc-2.22-upstream_i386_fix-1.patch \
-  &> $LFS_LOG_FILE-patch2.log
+  &> $LFS_LOG_FILE-2-patch2.log
 
-mkdir ../$LFS_BUILD_DIRECTORY
-cd ../$LFS_BUILD_DIRECTORY
-
+mkdir -v build
+cd       build
 
 echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-../glibc-2.22/configure    \
-    --prefix=/usr          \
-    --disable-profile      \
-    --enable-kernel=2.6.32 \
-    --enable-obsolete-rpc  \
-  &> $LFS_LOG_FILE-configure.log
+../configure --prefix=/usr          \
+   --disable-profile      \
+   --enable-kernel=2.6.32 \
+   --enable-obsolete-rpc  \
+   &> $LFS_LOG_FILE-1-configure.log
 
 echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 make $LFS_MAKE_FLAGS \
-  &> $LFS_LOG_FILE-make.log
+  &> $LFS_LOG_FILE-2-make.log
 
 echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 make check $LFS_MAKE_FLAGS \
-  &> $LFS_LOG_FILE-make-check.log
+  &> $LFS_LOG_FILE-3-make-check.log
 
 touch /etc/ld.so.conf
 
 echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 make install $LFS_MAKE_FLAGS \
-  &> $LFS_LOG_FILE-make-install.log
+  &> $LFS_LOG_FILE-4-make-install.log
 
 echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 cp -v ../glibc-2.22/nscd/nscd.conf /etc/nscd.conf
@@ -94,7 +91,7 @@ localedef -i zh_CN -f GB18030 zh_CN.GB18030
 
 echo "*** Running Make localedata  ... $LFS_SOURCE_FILE_NAME"
 make localedata/install-locales \
-  &> $LFS_LOG_FILE-make-locales.log
+  &> $LFS_LOG_FILE-5-make-locales.log
 
 echo "*** 6.9.2. Configuring Glibc"
 cat > /etc/nsswitch.conf << "EOF"

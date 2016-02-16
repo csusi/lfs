@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 5.10. GCC-5.2.0 (10.8 SBU - running as 'lfs')"
+echo "### 5.10. GCC-5.3.0 (10.8 SBU - running as 'lfs')"
 echo "### ================================================"
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.10
 LFS_SOURCE_FILE_PREFIX=gcc
-LFS_BUILD_DIRECTORY=gcc-build    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -47,51 +46,51 @@ time {
 	done
 
 	tar -xf ../mpfr-3.1.3.tar.xz
-	mv -v mpfr-3.1.3 mpfr
-	tar -xf ../gmp-6.0.0a.tar.xz
-	mv -v gmp-6.0.0 gmp
+	mv -v mpfr-3.1.3 mpfr					&> $LFS_LOG_FILE-1-mv-mpfr.log
+	tar -xf ../gmp-6.1.0.tar.xz
+	mv -v gmp-6.1.0 gmp						&> $LFS_LOG_FILE-2-mv-gmp.log
 	tar -xf ../mpc-1.0.3.tar.gz
-	mv -v mpc-1.0.3 mpc
+	mv -v mpc-1.0.3 mpc						&> $LFS_LOG_FILE-3-mv-mpc.log
 
 
-	mkdir ../$LFS_BUILD_DIRECTORY
-	cd ../$LFS_BUILD_DIRECTORY
+	mkdir -v build
+	cd build
 
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	CC=$LFS_TGT-gcc                                    \
 	CXX=$LFS_TGT-g++                                   \
 	AR=$LFS_TGT-ar                                     \
 	RANLIB=$LFS_TGT-ranlib                             \
-	../gcc-5.2.0/configure                             \
-		--prefix=/tools                                \
-		--with-local-prefix=/tools                     \
-		--with-native-system-header-dir=/tools/include \
-		--enable-languages=c,c++                       \
-		--disable-libstdcxx-pch                        \
-		--disable-multilib                             \
-		--disable-bootstrap                            \
-		--disable-libgomp								\
-		&> $LFS_LOG_FILE-configure.log
+	../configure                                       \
+    --prefix=/tools                                \
+    --with-local-prefix=/tools                     \
+    --with-native-system-header-dir=/tools/include \
+    --enable-languages=c,c++                       \
+    --disable-libstdcxx-pch                        \
+    --disable-multilib                             \
+    --disable-bootstrap                            \
+    --disable-libgomp                              \
+		&> $LFS_LOG_FILE-1-configure.log
 		
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS    \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-3-make-install.log
 
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	ln -sv gcc /tools/bin/cc \
-	  &> $LFS_LOG_FILE-make-symlink-for-gcc.log
+	  &> $LFS_LOG_FILE-4-make-symlink-for-gcc.log
 }
 
 ########## Chapter Clean-Up ##########
 
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
+rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/build)
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 
 show_build_errors $LFS_MOUNT_DIR

@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 6.14. GMP-6.0.0a (1.2 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.14. GMP-6.1.0 (1.3 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.14
 LFS_SOURCE_FILE_PREFIX=gmp
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -37,34 +36,35 @@ time {
 	# ABI=32 ./configure ...
 	### I do not believe this affects how my builds as I am building the target LFS with the same architecture as the OS
 	### Removing this, but if I do a subsequent 32-bit build this may be a problem.
-	./configure --prefix=/usr \
-	  --enable-cxx \
-	  --docdir=/usr/share/doc/gmp-6.0.0a \
-	   &> $LFS_LOG_FILE-configure.log
+	./configure --prefix=/usr    \
+            --enable-cxx     \
+            --disable-static \
+            --docdir=/usr/share/doc/gmp-6.1.0 \
+	   &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make HTML ... $LFS_SOURCE_FILE_NAME"
 	make html $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-html.log
+	  &> $LFS_LOG_FILE-3-make-html.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	make check $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-check.log
+	  &> $LFS_LOG_FILE-4-make-check.log
 	
 	echo "*** TODO: Make this an if-then-exit statement"
-	echo "*** Ensure that all 188 tests in the test suite passed."
-	awk '/tests passed/{total+=$2} ; END{print total}' $LFS_LOG_FILE-make-check.log
+	echo "*** Ensure that all 190 tests in the test suite passed."
+	awk '/# PASS:/{total+=$3} ; END{print total}'  $LFS_LOG_FILE-4-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-5-make-install.log
 	
 	echo "*** Running Make Install-HTML ... $LFS_SOURCE_FILE_NAME"
 	make install-html $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install-html.log
+	  &> $LFS_LOG_FILE-6-make-install-html.log
 	  
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	### None
@@ -76,8 +76,6 @@ echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
-
 
 show_build_errors ""
 capture_file_list "" 

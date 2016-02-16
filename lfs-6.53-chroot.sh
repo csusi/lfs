@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 6.53. Xz-5.2.1 (0.3 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.53. Xz-5.2.2 (0.3 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
 if [ ! -f ./lfs-include.sh ];then
@@ -28,12 +28,12 @@ cd $(ls -d /sources/$LFS_SOURCE_FILE_PREFIX*/)
 time {
 	
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
-	### None
+	sed -e '/mf\.buffer = NULL/a next->coder->mf.size = 0;' -i src/liblzma/lz/lz_encoder.c
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	./configure --prefix=/usr    \
             --disable-static \
-            --docdir=/usr/share/doc/xz-5.2.1 													&> $LFS_LOG_FILE-configure.log
+            --docdir=/usr/share/doc/xz-5.2.2 													&> $LFS_LOG_FILE-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS 																							  &> $LFS_LOG_FILE-make.log
@@ -45,8 +45,6 @@ time {
 	make install $LFS_MAKE_FLAGS 																				&> $LFS_LOG_FILE-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
-	
-
 	mv -v   /usr/bin/{lzma,unlzma,lzcat,xz,unxz,xzcat} /bin
 	mv -v /usr/lib/liblzma.so.* /lib
 	ln -svf ../../lib/$(readlink /usr/lib/liblzma.so) /usr/lib/liblzma.so

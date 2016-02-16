@@ -20,11 +20,11 @@ check_lfs_partition_mounted_and_swap_on
 ########## Begin LFS Chapter Content ##########
 
 ### While optional, going to do to conserve space.  
-strip --strip-debug /tools/lib/* 									&> $LFS_LOG_FILE-debugs.log
+strip --strip-debug /tools/lib/* 									&> $LFS_LOG_FILE-1-debugs.log
 
-/usr/bin/strip --strip-unneeded /tools/{,s}bin/* 	&> $LFS_LOG_FILE-unneeded.log
+/usr/bin/strip --strip-unneeded /tools/{,s}bin/* 	&> $LFS_LOG_FILE-2-unneeded.log
 
-rm -rf /tools/{,share}/{info,man,doc} 						&> $LFS_LOG_FILE-info-man_doc-files.log
+rm -rf /tools/{,share}/{info,man,doc} 						&> $LFS_LOG_FILE-3-info-man_doc-files.log
 
 echo ""
 echo "##################################  STOP!!! ##################################"

@@ -11,7 +11,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.16
 LFS_SOURCE_FILE_PREFIX=bash
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -33,19 +32,19 @@ time {
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	./configure --prefix=/tools --without-bash-malloc \
-		&> $LFS_LOG_FILE-configure.log
+		&> $LFS_LOG_FILE-1-configure.log
 			
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Test ... $LFS_SOURCE_FILE_NAME"
 	make tests $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-tests.log
+	  &> $LFS_LOG_FILE-3-make-tests.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS  \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-4-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	ln -sv bash /tools/bin/sh
@@ -57,7 +56,6 @@ echo ""
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 echo ""
 echo "*** Note: Includes word error in four warning messages.  Appears to be harmless."

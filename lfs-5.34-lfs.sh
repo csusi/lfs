@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 5.34. Xz-5.2.1  (0.2 SBU - running as 'lfs')"
+echo "### 5.34. Xz-5.2.2  (0.2 SBU - running as 'lfs')"
 echo "### ================================================"
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=5.34
 LFS_SOURCE_FILE_PREFIX=xz
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=$LFS_MOUNT_DIR/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -31,19 +30,19 @@ time {
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	./configure --prefix=/tools \
-	  &> $LFS_LOG_FILE-$LFS_SOURCE_FILE_PREFIX-configure.log
+	  &> $LFS_LOG_FILE-$LFS_SOURCE_FILE_PREFIX-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-$LFS_SOURCE_FILE_PREFIX-make.log
+	  &> $LFS_LOG_FILE-$LFS_SOURCE_FILE_PREFIX-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	make check $LFS_MAKE_FLAGS  \
-	  &> $LFS_LOG_FILE-$LFS_SOURCE_FILE_PREFIX-make-check.log
+	  &> $LFS_LOG_FILE-$LFS_SOURCE_FILE_PREFIX-3-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-$LFS_SOURCE_FILE_PREFIX-make-install.log
+	  &> $LFS_LOG_FILE-$LFS_SOURCE_FILE_PREFIX-4-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	### None
@@ -55,7 +54,6 @@ echo ""
 echo "*** Cleaning Up ... $LFS_SOURCE_FILE_NAME"
 cd $LFS_MOUNT_DIR/sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  $LFS_MOUNT_DIR/sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 echo ""
 show_build_errors $LFS_MOUNT_DIR

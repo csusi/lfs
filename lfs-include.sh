@@ -9,9 +9,9 @@ LFS_SWAP_PARTITION=/dev/sdb1
 LFS_ROOT_PARTITION=/dev/sdb2
 
 ### Count of lines in wget-list +2 for wget-list and mdsums files
-LFS_SOURCES_EXPECTED_COUNT=82
-LFS_SOURCES_LIST="http://www.linuxfromscratch.org/lfs/view/7.8/wget-list"
-LFS_SOURCES_MD5_SUMS="http://www.linuxfromscratch.org/lfs/view/7.8//md5sums"
+LFS_SOURCES_EXPECTED_COUNT=84
+LFS_SOURCES_LIST="http://www.linuxfromscratch.org/lfs/view/7.9-rc1/wget-list"
+LFS_SOURCES_MD5_SUMS="http://www.linuxfromscratch.org/lfs/view/7.9-rc1/md5sums"
 
 ### TODO: if this becomes ../lfs-backup then may be able to keep build on host OS contained to user home dir instead of in /root
 LFS_SOURCES_BACKUP_DIR=/root/lfs-backup/sources/

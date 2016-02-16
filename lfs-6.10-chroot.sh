@@ -13,7 +13,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.10
 LFS_SOURCE_FILE_PREFIX=adjust-toolchain
-LFS_BUILD_DIRECTORY=glibc-build    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -25,14 +24,14 @@ check_chroot_to_lfs_rootdir
 time {
 	
 	mv -v /tools/bin/{ld,ld-old}
-	mv -v /tools/$(gcc -dumpmachine)/bin/{ld,ld-old}
+	mv -v /tools/$(uname -m)-pc-linux-gnu/bin/{ld,ld-old}
 	mv -v /tools/bin/{ld-new,ld}
-	ln -sv /tools/bin/ld /tools/$(gcc -dumpmachine)/bin/ld
+	ln -sv /tools/bin/ld /tools/$(uname -m)-pc-linux-gnu/bin/ld
 	
 	gcc -dumpspecs | sed -e 's@/tools@@g'                   \
-	    -e '/\*startfile_prefix_spec:/{n;s@.*@/usr/lib/ @}' \
-	    -e '/\*cpp:/{n;s@$@ -isystem /usr/include@}' >      \
-	    `dirname $(gcc --print-libgcc-file-name)`/specs
+		-e '/\*startfile_prefix_spec:/{n;s@.*@/usr/lib/ @}' \
+		-e '/\*cpp:/{n;s@$@ -isystem /usr/include@}' >      \
+		`dirname $(gcc --print-libgcc-file-name)`/specs
 	
 	
 	echo "***************** STOP !!! *******************"

@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.54
 LFS_SOURCE_FILE_PREFIX=grub
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -28,24 +27,28 @@ cd $(ls -d /sources/$LFS_SOURCE_FILE_PREFIX*/)
 time {
 
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
-	sed -i -e '/gets is a/d' grub-core/gnulib/stdio.in.h
+	### Below depricated in 7.9
+	### sed -i -e '/gets is a/d' grub-core/gnulib/stdio.in.h
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	./configure --prefix=/usr          \
-            --sbindir=/sbin        \
-            --sysconfdir=/etc      \
-            --disable-grub-emu-usb \
-            --disable-efiemu       \
-            --disable-werror       																		&> $LFS_LOG_FILE-configure.log
+      --sbindir=/sbin        \
+      --sysconfdir=/etc      \
+      --disable-grub-emu-usb \
+      --disable-efiemu       \
+      --disable-werror       \
+       	&> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
-	make $LFS_MAKE_FLAGS 																								&> $LFS_LOG_FILE-make.log
+	make $LFS_MAKE_FLAGS 	\
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	### None 
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
-	make install $LFS_MAKE_FLAGS 																				&> $LFS_LOG_FILE-make-install.log
+	make install $LFS_MAKE_FLAGS 	\
+	  &> $LFS_LOG_FILE-3-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	### None
@@ -57,8 +60,6 @@ echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
-
 
 show_build_errors ""
 capture_file_list "" 

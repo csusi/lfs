@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.52
 LFS_SOURCE_FILE_PREFIX=groff
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -31,16 +30,19 @@ time {
 	### None
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	PAGE=$LFS_PAGE ./configure --prefix=/usr 			&> $LFS_LOG_FILE-configure.log
+	PAGE=$LFS_PAGE ./configure --prefix=/usr 	\
+	  &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
-	make  														&> $LFS_LOG_FILE-make.log
+	make  		\
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	### None 
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
-	make install  										&> $LFS_LOG_FILE-make-install.log
+	make install  		\
+	  &> $LFS_LOG_FILE-3-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	### None
@@ -52,7 +54,6 @@ echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
 echo ""
 echo "*** NOTE: There have been sporadic issues with this section not compiling.  The cause is"

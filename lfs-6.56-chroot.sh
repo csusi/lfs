@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.56
 LFS_SOURCE_FILE_PREFIX=gzip
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -32,21 +31,27 @@ time {
 	### None
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	./configure --prefix=/usr --bindir=/bin 												&> $LFS_LOG_FILE-configure.log
+	./configure --prefix=/usr --bindir=/bin 	\
+	  &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
-	make $LFS_MAKE_FLAGS 																						&> $LFS_LOG_FILE-make.log
+	make $LFS_MAKE_FLAGS 			\
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
-	make check $LFS_MAKE_FLAGS 																			&> $LFS_LOG_FILE-make-check.log
+	make check $LFS_MAKE_FLAGS 		\
+	  &> $LFS_LOG_FILE-3-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
-	make install $LFS_MAKE_FLAGS 																		&> $LFS_LOG_FILE-make-install.log
+	make install $LFS_MAKE_FLAGS 	\
+	  &> $LFS_LOG_FILE-4-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	
-	mv -v /bin/{gzexe,uncompress,zcmp,zdiff,zegrep} /usr/bin				&> $LFS_LOG_FILE-mv-files-1.log
-	mv -v /bin/{zfgrep,zforce,zgrep,zless,zmore,znew} /usr/bin			&> $LFS_LOG_FILE-mv-files-2.log
+	mv -v /bin/{gzexe,uncompress,zcmp,zdiff,zegrep} /usr/bin	\
+	  &> $LFS_LOG_FILE-5-mv-files-1.log
+	mv -v /bin/{zfgrep,zforce,zgrep,zless,zmore,znew} /usr/bin	\
+	  &> $LFS_LOG_FILE-6-mv-files-2.log
 }
 
 ########## Chapter Clean-Up ##########
@@ -55,8 +60,6 @@ echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
-
 
 show_build_errors ""
 capture_file_list "" 

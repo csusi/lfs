@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 6.28. E2fsprogs-1.42.13 (2.7 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.28. E2fsprogs-1.42.13 (2.9 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,6 +9,7 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.28
 LFS_SOURCE_FILE_PREFIX=e2fsprogs
+LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -42,25 +43,24 @@ time {
              --disable-libblkid      \
              --disable-libuuid       \
              --disable-uuidd         \
-             --disable-fsck			\
-             &> $LFS_LOG_FILE-1-config.log
+             --disable-fsck				&> $LFS_LOG_FILE-config.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-2-make.log
+	  &> $LFS_LOG_FILE-make.log
 	
 	ln -sfv /tools/lib/lib{blk,uu}id.so.1 lib
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	make LD_LIBRARY_PATH=/tools/lib check $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-3-make-check.log
+	  &> $LFS_LOG_FILE-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-4-make-install.log
+	  &> $LFS_LOG_FILE-make-install.log
 	
 	make install-libs $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-5-make-install-libs.log
+	  &> $LFS_LOG_FILE-make-install-libs.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	
@@ -84,7 +84,7 @@ cd /sources
 
 rm -rf $LFS_BUILD_DIRECTORY
 
-echo "*** Note 7.9: May get two hits.  One 'error' shows up in test name. [libext2fs.dvi] error is OK."
+
 show_build_errors ""
 capture_file_list "" 
 chapter_footer

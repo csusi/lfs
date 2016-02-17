@@ -35,7 +35,7 @@ echo "*** --> ./lfs-6.4-root.sh"
 
 ### NOTE: 6.4 automatically enters chroot at end.  Would need to ensure it knew
 ### instead of entering chroot, to run "lfs-runall-chroot-6.5-to-???.sh"
-### the same with 6.6 and 6.35
+### the same with 6.6 and 6.36
 
 ### Make script "lfs-runall-chroot-6.5-to-???.sh"
 ### 6.4 Copies scripts from /root/lfs to $LFS_MOUNT_DIR/tools/lfs, chroot at end

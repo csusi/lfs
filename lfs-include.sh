@@ -94,7 +94,7 @@ function check_lfs_partition_mounted_and_swap_on {
 function check_chroot_to_lfs_rootdir {
 	### Ch 6.4 chroots at end
 	### Ch 6.6 user starts new shell
-	### Ch 6.35 user starts new shell
+	### Ch 6.36 user starts new shell
 	### Why there needs to be three 'exit' at end of 6.72
 
 	if [ ! $(awk -v needle="$LFS_ROOT_PARTITION" '$1==needle {print $2}' /proc/mounts) = "/" ] ; then

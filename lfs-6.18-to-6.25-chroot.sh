@@ -30,6 +30,6 @@ echo "Chapter Ch. 6.18 to 6.25 finished on $(date -u)" >> /build-logs/0-mileston
 echo ""
 echo "########################## End Chapter 6.18 to 6.25 ##########################"
 echo "*** If builds are OK, run next 10 chapters:"
-echo "*** --> ./lfs-6.26-to-6.34-chroot.sh"
+echo "*** --> ./lfs-6.26-to-6.35-chroot.sh"
 echo ""
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 6.48. Findutils-4.6.0 (1.6 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.48. Findutils-4.4.2 (0.4 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
 if [ ! -f ./lfs-include.sh ];then
@@ -9,6 +9,7 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.48
 LFS_SOURCE_FILE_PREFIX=findutils
+LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -30,27 +31,21 @@ time {
 	### None
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	./configure --prefix=/usr --localstatedir=/var/lib/locate \
-	  &> $LFS_LOG_FILE-1-configure.log
+	./configure --prefix=/usr --localstatedir=/var/lib/locate 						&> $LFS_LOG_FILE-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
-	make $LFS_MAKE_FLAGS          \
-	  &> $LFS_LOG_FILE-2-make.log
+	make $LFS_MAKE_FLAGS 																									&> $LFS_LOG_FILE-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
-	make check $LFS_MAKE_FLAGS 		\
-	  &> $LFS_LOG_FILE-3-make-check.log
+	make check $LFS_MAKE_FLAGS 																						&> $LFS_LOG_FILE-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
-	make install $LFS_MAKE_FLAGS  	\
-	  &> $LFS_LOG_FILE-4-make-install.log
+	make install $LFS_MAKE_FLAGS 																					&> $LFS_LOG_FILE-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	
-	mv -v /usr/bin/find /bin		\
-	  &> $LFS_LOG_FILE-5-post-make-1.log
-	sed -i 's|find:=${BINDIR}|find:=/bin|' /usr/bin/updatedb	\
-	  &> $LFS_LOG_FILE-6-post-make-2.log
+	mv -v /usr/bin/find /bin																							&> $LFS_LOG_FILE-finish.log
+	sed -i 's|find:=${BINDIR}|find:=/bin|' /usr/bin/updatedb							&>> $LFS_LOG_FILE-finish.log
 }
 
 ########## Chapter Clean-Up ##########
@@ -59,6 +54,8 @@ echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
+rm -rf $LFS_BUILD_DIRECTORY
+
 
 show_build_errors ""
 capture_file_list "" 

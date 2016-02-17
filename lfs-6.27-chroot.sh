@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 6.27. Procps-ng-3.3.11  (0.1 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.27. Procps-ng-3.3.11  (0.2 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
 if [ ! -f ./lfs-include.sh ];then
@@ -36,21 +36,21 @@ time {
             --docdir=/usr/share/doc/procps-ng-3.3.11 \
             --disable-static                         \
             --disable-kill                           \
-	  &> $LFS_LOG_FILE-1-configure.log
+	  &> $LFS_LOG_FILE-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-2-make.log
+	  &> $LFS_LOG_FILE-make.log
 	
 	sed -i -r 's|(pmap_initname)\\\$|\1|' testsuite/pmap.test/pmap.exp
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	make check $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-3-make-check.log
+	  &> $LFS_LOG_FILE-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-4-make-install.log
+	  &> $LFS_LOG_FILE-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	
@@ -64,6 +64,8 @@ echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
+rm -rf $LFS_BUILD_DIRECTORY
+
 
 show_build_errors ""
 capture_file_list "" 

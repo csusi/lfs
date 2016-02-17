@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 6.41. Perl-5.22.1 (6.3 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.41. Inetutils-1.9.4  (0.4 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
 if [ ! -f ./lfs-include.sh ];then
@@ -8,7 +8,8 @@ if [ ! -f ./lfs-include.sh ];then
 source ./lfs-include.sh
 
 LFS_SECTION=6.41
-LFS_SOURCE_FILE_PREFIX=perl
+LFS_SOURCE_FILE_PREFIX=inetutils
+LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -25,48 +26,52 @@ cd $(ls -d /sources/$LFS_SOURCE_FILE_PREFIX*/)
 ########## Begin LFS Chapter Content ##########
 
 time {
-
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 	
-	echo "127.0.0.1 localhost $(hostname)" > /etc/hosts
-	
-	export BUILD_ZLIB=False
-	export BUILD_BZIP2=0
+	echo '#define PATH_PROCNET_DEV "/proc/net/dev"' >> ifconfig/system/linux.h  
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	sh Configure -des -Dprefix=/usr                 \
-                  -Dvendorprefix=/usr           \
-                  -Dman1dir=/usr/share/man/man1 \
-                  -Dman3dir=/usr/share/man/man3 \
-                  -Dpager="/usr/bin/less -isR"  \
-                  -Duseshrplib                  \
-	  &> $LFS_LOG_FILE-1-configure.log
+	./configure --prefix=/usr        \
+            --localstatedir=/var \
+            --disable-logger     \
+            --disable-whois      \
+            --disable-rcp        \
+            --disable-rexec      \
+            --disable-rlogin     \
+            --disable-rsh        \
+            --disable-servers      \
+	  &> $LFS_LOG_FILE-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-2-make.log
+	  &> $LFS_LOG_FILE-make.log
 	
-	echo "*** Running Make test ... $LFS_SOURCE_FILE_NAME"
-	make -k test $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-3-make-test.log
+	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
+	make check $LFS_MAKE_FLAGS \
+	  &> $LFS_LOG_FILE-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-4-make-install.log
+	  &> $LFS_LOG_FILE-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
-	unset BUILD_ZLIB BUILD_BZIP2
+	
+	mv -v /usr/bin/{hostname,ping,ping6,traceroute} /bin
+	mv -v /usr/bin/ifconfig /sbin
 }
 
 ########## Chapter Clean-Up ##########
 
-echo ""
+echo ""	
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
 rm -rf $LFS_BUILD_DIRECTORY
 
-
+echo ""
+echo "*** 7.8 Note: One test, libls.sh, is known to fail due to hard coding of some support program "
+echo "***     paths. Also, all tests should pass if the tests are rerun at the end of Chapter 6, "
+echo "***     if so inclined to do."
 show_build_errors ""
 capture_file_list "" 
 chapter_footer

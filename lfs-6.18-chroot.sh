@@ -9,6 +9,7 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.18
 LFS_SOURCE_FILE_PREFIX=bzip
+LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -29,16 +30,16 @@ time {
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 	
 	patch -Np1 -i ../bzip2-1.0.6-install_docs-1.patch \
-	  &> $LFS_LOG_FILE-1-patch.log
+	  &> $LFS_LOG_FILE-patch.log
 	
 	sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
 	
 	sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
 	
 	make -f Makefile-libbz2_so \
-	  &> $LFS_LOG_FILE-2-make-makefile-libbz2.log
+	  &> $LFS_LOG_FILE-make-makefile-libbz2.log
 	make clean \
-	  &> $LFS_LOG_FILE-3-make-clean.log
+	  &> $LFS_LOG_FILE-make-clean.log
 	
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
@@ -46,21 +47,21 @@ time {
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-4-make.log
+	  &> $LFS_LOG_FILE-make.log
 	
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make PREFIX=/usr install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-5-make-install.log
+	  &> $LFS_LOG_FILE-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	
-	cp -v bzip2-shared /bin/bzip2                      &>> $LFS_LOG_FILE-6-post-make.log
-	cp -av libbz2.so* /lib                             &>> $LFS_LOG_FILE-6-post-make.log
-	ln -sv ../../lib/libbz2.so.1.0 /usr/lib/libbz2.so  &>> $LFS_LOG_FILE-6-post-make.log
-	rm -v /usr/bin/{bunzip2,bzcat,bzip2}               &>> $LFS_LOG_FILE-6-post-make.log
-	ln -sv bzip2 /bin/bunzip2                          &>> $LFS_LOG_FILE-6-post-make.log
-	ln -sv bzip2 /bin/bzcat                            &>> $LFS_LOG_FILE-6-post-make.log
+	cp -v bzip2-shared /bin/bzip2                      &>> $LFS_LOG_FILE-post-make.log
+	cp -av libbz2.so* /lib                             &>> $LFS_LOG_FILE-post-make.log
+	ln -sv ../../lib/libbz2.so.1.0 /usr/lib/libbz2.so  &>> $LFS_LOG_FILE-post-make.log
+	rm -v /usr/bin/{bunzip2,bzcat,bzip2}               &>> $LFS_LOG_FILE-post-make.log
+	ln -sv bzip2 /bin/bunzip2                          &>> $LFS_LOG_FILE-post-make.log
+	ln -sv bzip2 /bin/bzcat                            &>> $LFS_LOG_FILE-post-make.log
 }
 
 ########## Chapter Clean-Up ##########
@@ -69,6 +70,7 @@ echo""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
+rm -rf $LFS_BUILD_DIRECTORY
 
 
 show_build_errors ""

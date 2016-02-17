@@ -43,7 +43,7 @@ echo ""
 ###  lfs-6.6-chroot.sh - At end of script executes a new bash shell.
 ###  exec /tools/bin/bash --login +h
 ### 
-###  lfs-6.36-chroot.sh - At end of script, executes newly compiled bash shell
+###  lfs-6.35-chroot.sh - At end of script, executes newly compiled bash shell
 ###  exec /bin/bash --login +h
 
 ###   lfs-6.72-chroot.sh - User prompted to execute chroot after exing to HOST os 

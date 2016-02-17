@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.24
 LFS_SOURCE_FILE_PREFIX=sed
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -32,26 +31,26 @@ time {
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	./configure --prefix=/usr --bindir=/bin --htmldir=/usr/share/doc/sed-4.2.2 \
-	  &> $LFS_LOG_FILE-configure.log
+	  &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS         \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make HTML... $LFS_SOURCE_FILE_NAME"
 	make html $LFS_MAKE_FLAGS    \
-	  &> $LFS_LOG_FILE-make-html.log
+	  &> $LFS_LOG_FILE-3-make-html.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	make check $LFS_MAKE_FLAGS   \
-	  &> $LFS_LOG_FILE-make-check.log
+	  &> $LFS_LOG_FILE-4-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-5-make-install.log
 	
 	make -C doc install-html $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install-html.log
+	  &> $LFS_LOG_FILE-6-make-install-html.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	### None
@@ -63,8 +62,6 @@ echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
-
 
 show_build_errors ""
 capture_file_list "" 

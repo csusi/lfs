@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 6.39. GDBM-1.11 (0.1 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.39. Expat-2.1.0 (0.1 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
 if [ ! -f ./lfs-include.sh ];then
@@ -8,8 +8,7 @@ if [ ! -f ./lfs-include.sh ];then
 source ./lfs-include.sh
 
 LFS_SECTION=6.39
-LFS_SOURCE_FILE_PREFIX=gdbm
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
+LFS_SOURCE_FILE_PREFIX=expat
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -30,33 +29,32 @@ time {
 	### None
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	./configure --prefix=/usr \
-            --disable-static \
-            --enable-libgdbm-compat \
-	  &> $LFS_LOG_FILE-configure.log
+	./configure --prefix=/usr  --disable-static 					&> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
-	make $LFS_MAKE_FLAGS 																&> $LFS_LOG_FILE-make.log
+	make $LFS_MAKE_FLAGS 																	&> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
-	make check $LFS_MAKE_FLAGS 													&> $LFS_LOG_FILE-make-check.log
+	make check $LFS_MAKE_FLAGS 														&> $LFS_LOG_FILE-3-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
-	make install $LFS_MAKE_FLAGS 												&> $LFS_LOG_FILE-make-install.log
+	make install $LFS_MAKE_FLAGS 													&> $LFS_LOG_FILE-4-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
-	### None
+	
+	install -v -dm755 /usr/share/doc/expat-2.1.0					&> $LFS_LOG_FILE-5-install-1.log
+	install -v -m644 doc/*.{html,png,css} /usr/share/doc/expat-2.1.0  &> $LFS_LOG_FILE-5-install-2.log
 }
 
 ########## Chapter Clean-Up ##########
 
-echo ""	
+echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
-
+echo ""
+echo "*** 7.8 Note: This is probably ok - fail('Parser did not report error..."
 show_build_errors ""
 capture_file_list "" 
 chapter_footer

@@ -79,7 +79,7 @@ echo "*** --> ./lfs-6.7-chroot.sh"
 echo "***"
 echo "*** Or run next 3 or 28 chapters in sequence:"
 echo "*** --> ./lfs-6.7-to-6.10-chroot.sh"
-echo "*** --> ./lfs-6.7-to-6.35-chroot.sh"
+echo "*** --> ./lfs-6.7-to-6.34-chroot.sh"
 echo ""
 
 ### Have moved these to the next chapter

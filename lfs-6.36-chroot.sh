@@ -1,17 +1,14 @@
 #!/bin/bash
 echo ""
-echo "### 6.36. Bash-4.3.30 (1.7 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.37. Bc-1.06.95 (0.2 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
-
-### TODO: Add some test or verification that, at the end when executing the 
-### newly compiled bash shell that we just created, it is the one being run.
 
 if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
 source ./lfs-include.sh
 
 LFS_SECTION=6.36
-LFS_SOURCE_FILE_PREFIX=bash
+LFS_SOURCE_FILE_PREFIX=bc
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -28,60 +25,53 @@ cd $(ls -d /sources/$LFS_SOURCE_FILE_PREFIX*/)
 ########## Begin LFS Chapter Content ##########
 
 time {
-	
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 	
-	patch -Np1 -i ../bash-4.3.30-upstream_fixes-2.patch \
+	patch -Np1 -i ../bc-1.06.95-memory_leak-1.patch \
 	  &> $LFS_LOG_FILE-1-patch.log
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	./configure --prefix=/usr                       \
-	        --docdir=/usr/share/doc/bash-4.3.30 \
-            --without-bash-malloc               \
-            --with-installed-readline        \
+	./configure --prefix=/usr           \
+            --with-readline         \
+            --mandir=/usr/share/man \
+            --infodir=/usr/share/info \
 	  &> $LFS_LOG_FILE-2-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
-	make $LFS_MAKE_FLAGS         \
+	make $LFS_MAKE_FLAGS \
 	  &> $LFS_LOG_FILE-3-make.log
 	
-	echo "*** Running Make Tests ... $LFS_SOURCE_FILE_NAME"  \
-	 2>&1 | tee $LFS_LOG_FILE-4-make-tests.log
+	### TODO make a wrapper to test this?  Read small bit in book about roundoffs?
+	echo "quit" | ./bc/bc -l Test/checklib.b \
+	  &> $LFS_LOG_FILE-4-make.log
 	
-	chown -Rv nobody .           \
-		&>> $LFS_LOG_FILE-5-make-tests.log
-		
-	su nobody -s /bin/bash -c "PATH=$PATH make tests"  \
-		&>> $LFS_LOG_FILE-6-make-tests.log
+	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
+	### None
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-7-make-install.log
+	 &> $LFS_LOG_FILE-5-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
-	### Running 'exec /bin/bash --login +h' below
+	### None
 }
-	
+
+########## Chapter Clean-Up ##########
+
+echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
-echo ""
-echo "*** Note: Warning messages with 'error' in them are red herrings." 
 show_build_errors ""
 capture_file_list "" 
 chapter_footer
 
-echo "*** To continue, run:"
-echo "*** --> cd /root/lfs "
-echo "*** --> ./lfs-6.37-chroot.sh "
-echo "***"
-echo "*** Or run next 13 or 33 chapters in sequence (after changing dir as above):"
-echo "*** --> ./lfs-6.37-to-6.50-chroot.sh"
-echo "*** --> ./lfs-6.37-to-6.70-chroot.sh"
-echo ""
+if [ $LFS_ERROR_COUNT -ne 0 ]; then
+	exit 4
+else
+	exit
+fi
 
-exec /bin/bash --login +h
 
 

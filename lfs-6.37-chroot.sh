@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "### 6.37. Bc-1.06.95 (0.2 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.37. Libtool-2.4.6  (2.2 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
 
 if [ ! -f ./lfs-include.sh ];then
@@ -8,8 +8,7 @@ if [ ! -f ./lfs-include.sh ];then
 source ./lfs-include.sh
 
 LFS_SECTION=6.37
-LFS_SOURCE_FILE_PREFIX=bc
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
+LFS_SOURCE_FILE_PREFIX=libtool
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -26,35 +25,29 @@ cd $(ls -d /sources/$LFS_SOURCE_FILE_PREFIX*/)
 ########## Begin LFS Chapter Content ##########
 
 time {
+
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
-	
-	patch -Np1 -i ../bc-1.06.95-memory_leak-1.patch \
-	  &> $LFS_LOG_FILE-patch.log
+	### None
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	./configure --prefix=/usr           \
-            --with-readline         \
-            --mandir=/usr/share/man \
-            --infodir=/usr/share/info \
-	  &> $LFS_LOG_FILE-configure.log
+	./configure --prefix=/usr \
+	  &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
-	
-	### TODO make a wrapper to test this?  Read small bit in book about roundoffs?
-	echo "quit" | ./bc/bc -l Test/checklib.b \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
-	### None
+	make check $LFS_MAKE_FLAGS \
+	  &> $LFS_LOG_FILE-3-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	 &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-4-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	### None
+
 }
 
 ########## Chapter Clean-Up ##########
@@ -63,9 +56,9 @@ echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
-
+echo "7.8: Five tests are known to fail in the LFS build environment due to a circular"
+echo "dependency, but all tests pass if rechecked after automake is installed"
 show_build_errors ""
 capture_file_list "" 
 chapter_footer

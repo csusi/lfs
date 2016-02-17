@@ -12,7 +12,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.25
 LFS_SOURCE_FILE_PREFIX=shadow
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -44,18 +43,18 @@ time {
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
 	./configure --sysconfdir=/etc --with-group-name-max-length=32 \
-	  &> $LFS_LOG_FILE-configure.log
+	  &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
 	make $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make.log
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
 	### None
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
 	make install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install.log
+	  &> $LFS_LOG_FILE-3-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
 	
@@ -77,8 +76,6 @@ echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
-
 
 show_build_errors ""
 capture_file_list "" 

@@ -9,7 +9,6 @@ source ./lfs-include.sh
 
 LFS_SECTION=6.47
 LFS_SOURCE_FILE_PREFIX=gawk
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -31,20 +30,26 @@ time {
 	### None
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	./configure --prefix=/usr 																						&> $LFS_LOG_FILE-configure.log
+	./configure --prefix=/usr 	\
+	  &> $LFS_LOG_FILE-1-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
-	make $LFS_MAKE_FLAGS 																									&> $LFS_LOG_FILE-make.log
+	make $LFS_MAKE_FLAGS 		\
+	  &> $LFS_LOG_FILE-2-make.log
 	
 	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
-	make check $LFS_MAKE_FLAGS 																						&> $LFS_LOG_FILE-make-check.log
+	make check $LFS_MAKE_FLAGS 	\
+	  &> $LFS_LOG_FILE-3-make-check.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
-	make install $LFS_MAKE_FLAGS 																					&> $LFS_LOG_FILE-make-install.log
+	make install $LFS_MAKE_FLAGS  \
+	  &> $LFS_LOG_FILE-4-make-install.log
 	
-	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"  			2>&1 | tee -a $LFS_LOG_FILE-post-make-tasks.log
-	mkdir -v /usr/share/doc/gawk-4.1.3                                		&>> $LFS_LOG_FILE-post-make-tasks.log 
-	cp    -v doc/{awkforai.txt,*.{eps,pdf,jpg}} /usr/share/doc/gawk-4.1.3 &>> $LFS_LOG_FILE-post-make-tasks.log 
+	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"  2>&1 | tee -a $LFS_LOG_FILE-5-post-make-tasks.log
+	mkdir -v /usr/share/doc/gawk-4.1.3    \
+	  &>> $LFS_LOG_FILE-5-post-make-tasks.log 
+	cp -v doc/{awkforai.txt,*.{eps,pdf,jpg}} /usr/share/doc/gawk-4.1.3 \
+	  &>> $LFS_LOG_FILE-post-make-tasks.log 
 
 }
 
@@ -54,8 +59,6 @@ echo ""
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
-
 
 show_build_errors ""
 capture_file_list "" 
@@ -66,6 +69,3 @@ if [ $LFS_ERROR_COUNT -ne 0 ]; then
 else
 	exit
 fi
-
-
-

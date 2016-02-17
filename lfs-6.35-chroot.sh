@@ -1,15 +1,17 @@
 #!/bin/bash
 echo ""
-echo "### 6.35. Readline-6.3 (0.1 SBU - chrooted to lfs partition as 'root')"
+echo "### 6.35. Bash-4.3.30 (1.7 SBU - chrooted to lfs partition as 'root')"
 echo "### ========================================================================="
+
+### TODO: Add some test or verification that, at the end when executing the 
+### newly compiled bash shell that we just created, it is the one being run.
 
 if [ ! -f ./lfs-include.sh ];then
     echo "*** Fatal Error - './lfs-include.sh' not found." ; exit 8 ; fi
 source ./lfs-include.sh
 
 LFS_SECTION=6.35
-LFS_SOURCE_FILE_PREFIX=readline
-LFS_BUILD_DIRECTORY=    # Leave empty if not needed
+LFS_SOURCE_FILE_PREFIX=bash
 LFS_LOG_FILE=/build-logs/$LFS_SECTION-$LFS_SOURCE_FILE_PREFIX
 
 echo "*** Validating the environment."
@@ -26,62 +28,59 @@ cd $(ls -d /sources/$LFS_SOURCE_FILE_PREFIX*/)
 ########## Begin LFS Chapter Content ##########
 
 time {
-
+	
 	echo "*** Running Pre-Configuration Tasks ... $LFS_SOURCE_FILE_NAME"
 	
-	patch -Np1 -i ../readline-6.3-upstream_fixes-3.patch	  &> $LFS_LOG_FILE-patch.log
-	
-	sed -i '/MV.*old/d' Makefile.in
-	sed -i '/{OLDSUFF}/c:' support/shlib-install
+	patch -Np1 -i ../bash-4.3.30-upstream_fixes-2.patch \
+	  &> $LFS_LOG_FILE-1-patch.log
 	
 	echo "*** Running Configure ... $LFS_SOURCE_FILE_NAME"
-	./configure --prefix=/usr    \
-            --disable-static \
-            --docdir=/usr/share/doc/readline-6.3 \
-	  &> $LFS_LOG_FILE-configure.log
+	./configure --prefix=/usr                       \
+	        --docdir=/usr/share/doc/bash-4.3.30 \
+            --without-bash-malloc               \
+            --with-installed-readline        \
+	  &> $LFS_LOG_FILE-2-configure.log
 	
 	echo "*** Running Make ... $LFS_SOURCE_FILE_NAME"
-	make SHLIB_LIBS=-lncurses $LFS_MAKE_FLAGS         \
-	  &> $LFS_LOG_FILE-make.log
+	make $LFS_MAKE_FLAGS         \
+	  &> $LFS_LOG_FILE-3-make.log
 	
-	echo "*** Running Make Check ... $LFS_SOURCE_FILE_NAME"
-	### None
+	echo "*** Running Make Tests ... $LFS_SOURCE_FILE_NAME"  \
+	 2>&1 | tee $LFS_LOG_FILE-4-make-tests.log
+	
+	chown -Rv nobody .           \
+		&>> $LFS_LOG_FILE-5-make-tests.log
+		
+	su nobody -s /bin/bash -c "PATH=$PATH make tests"  \
+		&>> $LFS_LOG_FILE-6-make-tests.log
 	
 	echo "*** Running Make Install ... $LFS_SOURCE_FILE_NAME"
-	make SHLIB_LIBS=-lncurses install $LFS_MAKE_FLAGS \
-	  &> $LFS_LOG_FILE-make-install.log
+	make install $LFS_MAKE_FLAGS \
+	  &> $LFS_LOG_FILE-7-make-install.log
 	
 	echo "*** Performing Post-Make Tasks ... $LFS_SOURCE_FILE_NAME"
-	
-	mv -v /usr/lib/lib{readline,history}.so.* /lib	\
-	  &> $LFS_LOG_FILE-post-make.log
-	ln -sfv ../../lib/$(readlink /usr/lib/libreadline.so) /usr/lib/libreadline.so  \
-	  &>> $LFS_LOG_FILE-post-make.log
-	ln -sfv ../../lib/$(readlink /usr/lib/libhistory.so ) /usr/lib/libhistory.so   \
-	  &>> $LFS_LOG_FILE-post-make.log
-	
-	install -v -m644 doc/*.{ps,pdf,html,dvi} /usr/share/doc/readline-6.3  \
-	  &>> $LFS_LOG_FILE-post-make.log
+	### Running 'exec /bin/bash --login +h' below
 }
-
-########## Chapter Clean-Up ##########
-
-echo ""
+	
 echo "*** Running Clean Up Tasks ... $LFS_SOURCE_FILE_NAME"
 cd /sources
 [ ! $LFS_DO_NOT_DELETE_SOURCES_DIRECTORY ] && rm -rf $(ls -d  /sources/$LFS_SOURCE_FILE_PREFIX*/)
-rm -rf $LFS_BUILD_DIRECTORY
 
-
+echo ""
+echo "*** Note: Warning messages with 'error' in them are red herrings." 
 show_build_errors ""
 capture_file_list "" 
 chapter_footer
 
-if [ $LFS_ERROR_COUNT -ne 0 ]; then
-	exit 4
-else
-	exit
-fi
+echo "*** To continue, run:"
+echo "*** --> cd /root/lfs "
+echo "*** --> ./lfs-6.36-chroot.sh "
+echo "***"
+echo "*** Or run next 13 or 33 chapters in sequence (after changing dir as above):"
+echo "*** --> ./lfs-6.36-to-6.50-chroot.sh"
+echo "*** --> ./lfs-6.36-to-6.70-chroot.sh"
+echo ""
 
+exec /bin/bash --login +h
 
 

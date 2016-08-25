@@ -84,12 +84,12 @@ Tested Host OS
 
     Linux Mint v18 xfce 64-bit in VirtualBox v5.1.4 r110228 (Qt5.5.1)  
         Create Virtual Machine...  
-            Name: mint18-xfce-64b-lfs (Type: Linux; Version: Ubuntu 64-bit)  
+            Name: mint-xfce-18-64b-lfs (Type: Linux; Version: Ubuntu 64-bit)  
             Memory: 2 GB RAM  
             Create a virtual hard disk now...  
                 VDI(VirtualBox Disk Image)  
                 Dynamically Allocated  
-                Name: mint18-xfce-64b-lfs-sda  
+                Name: mint-xfce-18-64b-lfs-sda  
                 Size: 20 GB   
             Additional Settings...  
                 General-> Advanced -> Shared Clipboard -> Bidirectional  (for convenience)  
@@ -99,7 +99,7 @@ Tested Host OS
                 System -> Motherboard -> Extended Features -> Enable I/O APIC   
                 System -> Motherboard -> Extended Features -> Disable EFI   
                 System -> Motherboard -> Extended Features -> Enable Hardware Clock in UTC Time   
-                System -> Processor -> 4 CPUs (NOT DEFAULT SETTING)  
+                System -> Processor -> 4 CPUs (NOT DEFAULT SETTING, do not use more than actual physical cores)  
                 System -> Processor -> Execution Cap 100%   
                 System -> Processor -> Disable Enable PAE/NX   
                 System -> Acceleration -> Paravirtualization Interface -> Default   
@@ -118,8 +118,8 @@ Tested Host OS
                     Add New Storage Attachment -> Add Hard Disk -> Create New Disk ->   
                     VDI(VirtualBox Disk Image)  
                     Dynamically Allocated  
-                    Name: mint18-xfce-64b-lfs-sdb  
-                    Size: 10 GB  (This will be your new Linux system, allocate larger if desired)  
+                    Name: mint-xfce-18-64b-lfs-sdb  
+                    Size: 15 GB  (This will be your new Linux system, allocate larger if desired)  
                 Network -> Adapter 1 -> Enable Network Adapter   
                 Network -> Adapter 1 -> Attached to -> Bridged Adaptor (NOT DEFAULT SETTING)  
         Install Linux Mint (This is the LFS host system)  

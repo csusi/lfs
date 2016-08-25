@@ -1,7 +1,7 @@
 Linux From Shell
 ================
 
-A Linux From Scratch implementation (7.8) using basic shell scripts.
+A Linux From Scratch implementation (7.10) using basic shell scripts.
 
 The purpose of this project is to:
 
@@ -82,14 +82,14 @@ If shutting down the Host OS, perform the following steps on rebooting.
 Tested Host OS  
 --------------
 
-    Linux Mint v17.2 xfce 64-bit in VirtualBox v5.0.12.  
+    Linux Mint v18 xfce 64-bit in VirtualBox v5.1.4 r110228 (Qt5.5.1)  
         Create Virtual Machine...  
-            Name: mint17.2-xfce-64b-lfs (Type: Linux; Version: Ubuntu 64-bit)  
+            Name: mint18-xfce-64b-lfs (Type: Linux; Version: Ubuntu 64-bit)  
             Memory: 2 GB RAM  
             Create a virtual hard disk now...  
                 VDI(VirtualBox Disk Image)  
                 Dynamically Allocated  
-                Name: mint17.2-xfce-64b-lfs-sda  
+                Name: mint18-xfce-64b-lfs-sda  
                 Size: 20 GB   
             Additional Settings...  
                 General-> Advanced -> Shared Clipboard -> Bidirectional  (for convenience)  
@@ -113,12 +113,12 @@ Tested Host OS
                 Display -> Remote Display -> Disabled   
                 Display -> Video Capture -> Disabled   
                 Storage -> Select Empty Optical Disk ->   
-                    Choose Optical Disk File... -> F:\ISOs\Linux-Distros\linuxmint-17.2-xfce-64bit.iso  
+                    Choose Optical Disk File... -> <<Path To>>\linuxmint-19-xfce-64bit.iso  
                 Storage -> Select Controller SATA (where other HDD is) ->  
                     Add New Storage Attachment -> Add Hard Disk -> Create New Disk ->   
                     VDI(VirtualBox Disk Image)  
                     Dynamically Allocated  
-                    Name: mint17.2-xfce-64b-lfs-sdb  
+                    Name: mint18-xfce-64b-lfs-sdb  
                     Size: 10 GB  (This will be your new Linux system, allocate larger if desired)  
                 Network -> Adapter 1 -> Enable Network Adapter   
                 Network -> Adapter 1 -> Attached to -> Bridged Adaptor (NOT DEFAULT SETTING)  

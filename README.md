@@ -149,16 +149,23 @@ Tested Host OS
             In File Manager (click on Home on desktop) eject the VirtualBox CD  
         Restart Linux Instance  
         Open terminal window, verify VBox Additions: dmesg | egrep -i 'virtualbox|vbox'   
-        Start -> System -> Screensaver -> Mode: Disable (waste of CPU when compiling)  
-        Optional: Shut down & copy VM for fresh host OS install.    
-        sudo apt-get install git -y     # Or if this is how you want to transfer scripts over  
+        Start -> Settings -> Screensaver -> Mode: Disable (waste of CPU when compiling)  
+        Opt: Install a GUI text editor you prefer, like: sudo apt-get install geany -y  
+        Opt: Install a graphical partition editor, like: sudo apt-get install gparted -y    
+        Opt: Set scrollback in terminal to 5000 lines, solid background color 
+        sudo apt-get update ; sudo apt-get upgrade  
+        Opt: Shut down & clone/copy VM for fresh build of OS (mint18-xfce-64b-lfs-FreshBuild)
+           Reinitialize MAC addr so can be used in parallel with other clones if desired
+           Full Clone
+           Restart VM
+        sudo apt-get install git -y     
         Configure git  
             git config --global user.name "me"  
             git config --global user.email "me@here.com"  
             su  # To keep git settings consistent between local user and root  
             git config --global user.name "me"  
             git config --global user.email "me@here.com"         
-        sudo ln -sf /bin/bash /bin/sh        # Host system requirement for LFS              
+        sudo ln -sf /bin/bash /bin/sh        # Host requirement for LFS, Mint symlinks to /bin/dash by default             
         sudo apt-get install build-essential -y   # Critical for compiling source  
         sudo apt-get install -y ncurses-dev    
             # Note: In LFS 7.6 this was critical for ch6.70 or will get   
@@ -166,19 +173,17 @@ Tested Host OS
             # Not tested without installing in a lfs7.8 build and beyond, just   
             # so installing it anyhow to ensure it's present.  
         sudo apt-get install -y texinfo    # Installes makeinfo requirement  
-        sudo apt-get update  
-        sudo apt-get upgrade  
-        Install a text editor you prefer, like: sudo apt-get install geany -y  
-        Allow your GUI login to access & update contents of /root (where script files will be.  This is optional, makes it easier to edit files if needed)  
-            sudo usermod -a -G root <<GUI Login>>  
+        
+        Opt: Allow your GUI login to access & update contents of /root (where script files will be.) Technically bad security practice, it is easier to edit files from a text editor in the x-win environment and read/save directly to /root path.  And... it's a VM.  
+            sudo usermod -a -G root <<your current login>>  
             sudo chmod -R 770 /root       
-        Optional: Install a graphical partition editor: sudo apt-get install gparted -y    
         Configure LFS Virtual HDD (This follows book 2.2. Creating a New Partition)  
             Assuming this is a second virtual HDD (15 GB), configured as SCSI in VMWare  
             or SATA in VirtualBox.  Using cfdisk or disk partition program of choice:        
                 sdb1 - Not Boot - Primary - Linux swap (82) - 1x RAM or as desired (2GB VM=2048)  
                 sdb2 - Boot - Primary - linux (83) - Rest of HDD  
-        Shut down & copy VM for fresh prepped host OS.   
+        sudo apt-get update ; sudo apt-get upgrade  (Why again? If using a -FreshBuild weeks/months later, probably be needed)  
+        Shut down & copy VM for fresh prepped host OS.  (mint18-xfce-64b-lfs-FreshPrepped)   
         
 Kernel Configuration for 'make menuconfig'
 ------------------------------------------

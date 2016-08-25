@@ -139,6 +139,8 @@ Tested Host OS
                 Set as needed: Location, Keyboard Layout, User ID, Computer Name  
                     Who are you? -> Log in automatically -> Enable (for convenience)  
         Boot Linux Instance  
+        === NOTE ================================
+        --> Looks like these do not work with Min18, but included drivers do.  So skip this. 
         In VirtualBox Guest Window -> Devices -> Insert Guest Additions CD Image...  
         Install VirtualBox Guest Tools  
             Open Terminal   
@@ -149,15 +151,18 @@ Tested Host OS
             In File Manager (click on Home on desktop) eject the VirtualBox CD  
         Restart Linux Instance  
         Open terminal window, verify VBox Additions: dmesg | egrep -i 'virtualbox|vbox'   
+        === END =================================
         Start -> Settings -> Screensaver -> Mode: Disable (waste of CPU when compiling)  
         Opt: Install a GUI text editor you prefer, like: sudo apt-get install geany -y  
         Opt: Install a graphical partition editor, like: sudo apt-get install gparted -y    
-        Opt: Set scrollback in terminal to 5000 lines, solid background color 
+        Opt: In Terminal Edit->Preferences Scrollback: 5000; Solid Background Color; Col: 120 Row: 40  (or as desired) 
+        Opt: Set Screen Size 1280x800 (or as desired)
         sudo apt-get update ; sudo apt-get upgrade  
-        Opt: Shut down & clone/copy VM for fresh build of OS (mint18-xfce-64b-lfs-FreshBuild)
+        Opt: Shut down & clone/copy VM for fresh build of OS (mint-xfce-18-64b-lfs-FreshBuild)
            Reinitialize MAC addr so can be used in parallel with other clones if desired
            Full Clone
            Restart VM
+
         sudo apt-get install git -y     
         Configure git  
             git config --global user.name "me"  
@@ -182,8 +187,8 @@ Tested Host OS
             or SATA in VirtualBox.  Using cfdisk or disk partition program of choice:        
                 sdb1 - Not Boot - Primary - Linux swap (82) - 1x RAM or as desired (2GB VM=2048)  
                 sdb2 - Boot - Primary - linux (83) - Rest of HDD  
-        sudo apt-get update ; sudo apt-get upgrade  (Why again? If using a -FreshBuild weeks/months later, probably be needed)  
-        Shut down & copy VM for fresh prepped host OS.  (mint18-xfce-64b-lfs-FreshPrepped)   
+        sudo apt-get update ; sudo apt-get upgrade  (If using a -FreshBuild weeks/months later, else skip)  
+        Shut down & copy VM for fresh prepped host OS.  (mint-xfce-18-64b-lfs-FreshPrepped)   
         
 Kernel Configuration for 'make menuconfig'
 ------------------------------------------

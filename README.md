@@ -23,7 +23,6 @@ Instructions:
 0. Retrieve scripts.  
   --> su -  
   --> chmod 770 /root/lfs ; cd /root/lfs ; chmod -R 760 * ; chmod 770 systemd  
-  --> chmod 770 lfs ; cd lfs ; chmod 760 *  
  If working on a branch, change to branch (Only a master, not necessary at this time)  
  ~~--> git checkout -b rb7.8 origin/rb7.8~~  
 0. Review and update the file 'lfs-include.sh'. Some changes may be required for local needs. Especially...

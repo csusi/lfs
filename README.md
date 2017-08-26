@@ -82,14 +82,14 @@ If shutting down the Host OS, perform the following steps on rebooting.
 Tested Host OS  
 --------------
 
-    Linux Mint v17.2 xfce 64-bit in VirtualBox v5.0.12.  
+    Linux Mint v18.2 xfce 64-bit in VirtualBox v5.1.26 r117224 (Qt5.6.2)
         Create Virtual Machine...  
-            Name: mint17.2-xfce-64b-lfs (Type: Linux; Version: Ubuntu 64-bit)  
+            Name: mint18.2-xfce-64b (Type: Linux; Version: Ubuntu 64-bit)  
             Memory: 2 GB RAM  
             Create a virtual hard disk now...  
                 VDI(VirtualBox Disk Image)  
                 Dynamically Allocated  
-                Name: mint17.2-xfce-64b-lfs-sda  
+                Name: mint18.2-xfce-64b-sda  
                 Size: 20 GB   
             Additional Settings...  
                 General-> Advanced -> Shared Clipboard -> Bidirectional  (for convenience)  
@@ -109,21 +109,23 @@ Tested Host OS
                 Display -> Screen -> Monitor Count -> 1  
                 Display -> Screen -> Scale Factor -> 100%   
                 Display -> Screen -> Acceleration -> Enable 3D Acceleration (NOT DEFAULT SETTING)  
-                Display -> Screen -> Enable 2D Video Acceleration   
+                Display -> Screen -> Acceleration -> Disable 2D Video Acceleration   
                 Display -> Remote Display -> Disabled   
                 Display -> Video Capture -> Disabled   
                 Storage -> Select Empty Optical Disk ->   
-                    Choose Optical Disk File... -> F:\ISOs\Linux-Distros\linuxmint-17.2-xfce-64bit.iso  
+                    Choose Optical Disk File... -> <Path To>\linuxmint-18.2-xfce-64bit.iso  
                 Storage -> Select Controller SATA (where other HDD is) ->  
                     Add New Storage Attachment -> Add Hard Disk -> Create New Disk ->   
                     VDI(VirtualBox Disk Image)  
                     Dynamically Allocated  
-                    Name: mint17.2-xfce-64b-lfs-sdb  
+                    Name: mint18.2-xfce-64b-sdb  
                     Size: 10 GB  (This will be your new Linux system, allocate larger if desired)  
                 Network -> Adapter 1 -> Enable Network Adapter   
-                Network -> Adapter 1 -> Attached to -> Bridged Adaptor (NOT DEFAULT SETTING)  
+                Network -> Adapter 1 -> Attached to -> Bridged Adaptor (NOT DEFAULT SETTING)
+	Start Virtual Machine 
         Install Linux Mint (This is the LFS host system)  
-            Language: English (or desired language)  
+            Language: English (or desired language) 
+	    Preparing To Install Linux Mint -> Install 3rd party software (If Desired)		
             Installation Type: Something Else  
                 Create New Partition Table on /dev/sda  
                 Use /dev/sda free space to create swap partition   
@@ -142,22 +144,26 @@ Tested Host OS
         In VirtualBox Guest Window -> Devices -> Insert Guest Additions CD Image...  
         Install VirtualBox Guest Tools  
             Open Terminal   
-            /media/css/VBOXADDITIONS_5.0.12_104815  (or location)  
+            cd /media/<User Name>/VBOXADDITIONS_5.0.12_104815  (or location)  
             Purge existing tools: sudo apt-get purge virtualbox*   (probably 3 to remove)  
             Install VirtualBox Linux Additions: sudo bash ./VBoxLinuxAdditions.run  
             Close terminal window  
             In File Manager (click on Home on desktop) eject the VirtualBox CD  
         Restart Linux Instance  
         Open terminal window, verify VBox Additions: dmesg | egrep -i 'virtualbox|vbox'   
-        Start -> System -> Screensaver -> Mode: Disable (waste of CPU when compiling)  
-        Optional: Shut down & copy VM for fresh host OS install.    
+        Linux Mint XFCE now uses Light Locker for display locking.  This is a VM let your pc handle this.  
+	    Start -> Settings -> Light Locker -> Automatically lock the screen: Never
+	    Start -> Settings -> Light Locker -> Open Power Manager Settings -> Display
+	        Blank After & Put To Sleep After & Switch Off After -> Plugged In -> Slide left to Never.
+        Optional: Shut down & copy VM for fresh host OS Build.    
         sudo apt-get install git -y     # Or if this is how you want to transfer scripts over  
         Configure git  
             git config --global user.name "me"  
             git config --global user.email "me@here.com"  
-            su  # To keep git settings consistent between local user and root  
+            sudo su  # To keep git settings consistent between local user and root  
             git config --global user.name "me"  
-            git config --global user.email "me@here.com"         
+            git config --global user.email "me@here.com" 
+	    exit
         sudo ln -sf /bin/bash /bin/sh        # Host system requirement for LFS              
         sudo apt-get install build-essential -y   # Critical for compiling source  
         sudo apt-get install -y ncurses-dev    
@@ -170,7 +176,7 @@ Tested Host OS
         sudo apt-get upgrade  
         Install a text editor you prefer, like: sudo apt-get install geany -y  
         Allow your GUI login to access & update contents of /root (where script files will be.  This is optional, makes it easier to edit files if needed)  
-            sudo usermod -a -G root <<GUI Login>>  
+            sudo usermod -a -G root <User Name>  
             sudo chmod -R 770 /root       
         Optional: Install a graphical partition editor: sudo apt-get install gparted -y    
         Configure LFS Virtual HDD (This follows book 2.2. Creating a New Partition)  
